@@ -2,9 +2,12 @@
   "name": "coupang-eats",
   "version": "1.0.0",
   "description": "coupang eats server web app clone",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "monit": "pm2 monit",
+    "dev": "babel-node ./src/app.js",
+    "pm2": "pm2 start npm -- run dev"
   },
   "repository": {
     "type": "git",
@@ -15,5 +18,17 @@
   "bugs": {
     "url": "https://github.com/mock-rp3/rp3_test_server_coupang_eats_coogie/issues"
   },
-  "homepage": "https://github.com/mock-rp3/rp3_test_server_coupang_eats_coogie#readme"
+  "homepage": "https://github.com/mock-rp3/rp3_test_server_coupang_eats_coogie#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pm2": "^5.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/node": "^7.14.9",
+    "@babel/preset-env": "^7.15.0"
+  }
 }
