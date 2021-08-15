@@ -8,8 +8,10 @@
 - password: 8518bg
 
 * User
-    - user join
-    - user login
+    - user join[X]
+        - local login 
+    - user login[X]
+        - jwt token 반환
 * Category
 
 * Restaurant
@@ -20,6 +22,13 @@
 * Order
 * Favoriete
 * Review
+
+* devops
+    - EC2 server에 git clone
+
+
+### 개발 일지
+15일: 하,,, 도메인에 api를 연결하려는데 안돼서 지금까지 시간을 버렸다. 내일은 무조건 만든다
 
 
 
