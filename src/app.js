@@ -1,7 +1,16 @@
+import "dotenv/config";
 import express from "express";
+import userRouter from "./Routers/userRouter";
+import routes from "./routes";
 
-const app = express();
+const app = () => {
+  const app = express();
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => res.json("hi"));
+  app.use(routes.users, userRouter);
 
-app.listen(4000, () => console.log("listening: 4000"));
+  return app;
+};
+
+export default app;
