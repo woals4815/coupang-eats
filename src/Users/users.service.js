@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { insertUser, selectUserByEmail } from "./users.dao";
 import pool from "../Config/db";
 import userProvider from "./users.provider";
+import baseResponse from "../Config/baseResponse";
 
 const createUser = async ({ email, password, name, phoneNumber }) => {
   const connection = await pool.getConnection(async (conn) => conn);
@@ -14,19 +15,20 @@ const createUser = async ({ email, password, name, phoneNumber }) => {
     const { result: userResult, error } =
       await userProvider.retrieveUserByEmail(email);
     if (error) {
-      throw error;
+      throw DB_ERROR;
     }
     if (userResult?.length > 0) {
-      throw "이미 존재하는 이메일입니다.";
+      throw baseResponse.SIGNUP_REDUNDANT_EMAIL;
     }
     //비번 해쉬
     const hashedPassword = await bcrypt.hash(password, saltRound);
     //inserUser dao 인자
     const insertParams = [name, email, hashedPassword, phoneNumber];
     //insert 결과
-    const result = await insertUser(connection, insertParams);
+    const insertResult = await insertUser(connection, insertParams);
 
     await connection.commit();
+    const result = { ...baseResponse.SUCCESS, result: insertResult.insertId };
 
     return { result };
   } catch (error) {
@@ -43,16 +45,17 @@ const loginUser = async ({ email, password }) => {
   try {
     const [user] = await selectUserByEmail(connection, email);
     if (!user) {
-      throw "존재하지 않은 ID/Email 입니다.";
+      throw baseResponse.USER_USEREMAIL_NOT_EXIST;
     }
     const ok = await bcrypt.compare(password, user.password);
     let token = "";
     if (ok) {
       const payload = { userId: user.id };
       token = jwt.sign(payload, process.env.JWT_SECRET);
-      return { result: token };
+      const result = { ...baseResponse.LOGIN_SUCCESS, result: { token } };
+      return { result };
     } else {
-      throw "비밀번호를 정확히 입력해주세요.";
+      throw baseResponse.SIGNIN_PASSWORD_WRONG;
     }
   } catch (error) {
     console.log(error);

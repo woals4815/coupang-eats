@@ -2,11 +2,11 @@
   "name": "coupang-eats",
   "version": "1.0.0",
   "description": "coupang eats server web app clone",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "monit": "pm2 monit",
-    "dev": "babel-node ./src/main.js",
+    "dev": "babel-node ./index.js",
     "pm2": "pm2 start npm -- run dev --watch"
   },
   "repository": {
