@@ -5,6 +5,11 @@ const RESTAURANTS = "/restaurants";
 const RESTAURANT_ID = "/:restaurantId";
 const LOGIN = "/login";
 const USER_PROFILE = "/user-profile";
+const CATEGORIES = "/categories";
+const FOOD_CATEGORY = "/food";
+const INFO_CATEGORY = "/info";
+const MENU_CATEGORY = "/menu";
+const OPTION_CATEGORY = "/option-category";
 
 const routes = {
   start: START_POINT,
@@ -14,6 +19,11 @@ const routes = {
   restaurantId: RESTAURANT_ID,
   login: LOGIN,
   userProfile: USER_PROFILE,
+  categories: CATEGORIES,
+  foodCategory: FOOD_CATEGORY,
+  infoCategory: INFO_CATEGORY,
+  menuCategory: MENU_CATEGORY,
+  optionCategory: OPTION_CATEGORY,
 };
 
 export default routes;

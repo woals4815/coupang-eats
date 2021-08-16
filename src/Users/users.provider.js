@@ -5,7 +5,10 @@ import { selectUserByEmail, selectUserById, selectUsers } from "./users.dao";
 const retrieveUsers = async () => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const result = await selectUsers(connection);
+    const selectResult = await selectUsers(connection);
+
+    const result = { ...baseResponse.SUCCESS, result: selectResult };
+
     return { result };
   } catch (error) {
     console.log(error);

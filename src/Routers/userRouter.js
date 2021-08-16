@@ -3,7 +3,6 @@ import jwtMiddleware from "../Config/jwtMiddleware";
 import routes from "../routes";
 import userController from "../Users/users.controller";
 const userRouter = express.Router();
-//컨테이너로 userConroller class 가져옴
 
 //router REST
 userRouter.get(routes.start, userController.getUsers);

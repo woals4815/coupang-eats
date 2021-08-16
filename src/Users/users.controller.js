@@ -1,3 +1,4 @@
+import baseResponse from "../Config/baseResponse";
 import responseHandler from "../Config/responseHandler";
 import validationSchema from "../Validations/validationSchema";
 import userProvider from "./users.provider";
@@ -6,6 +7,7 @@ import userService from "./users.service";
 const getUsers = async (req, res) => {
   try {
     const { result, error } = await userProvider.retrieveUsers();
+
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {

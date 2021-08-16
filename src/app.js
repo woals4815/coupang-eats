@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import foodCategoryRouter from "./Routers/categoryRouter";
 import userRouter from "./Routers/userRouter";
 import routes from "./routes";
 
@@ -9,6 +10,7 @@ const app = () => {
   app.use(express.urlencoded({ extended: true }));
 
   app.use(routes.users, userRouter);
+  app.use(routes.categories, foodCategoryRouter);
 
   return app;
 };
