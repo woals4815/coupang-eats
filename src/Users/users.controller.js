@@ -51,7 +51,16 @@ const getUserById = async (req, res) => {
     params: { userId },
   } = req;
   try {
-  } catch (error) {}
+    const { result, error } = await userProvider.retrieveUserById(userId);
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    console.log(error);
+    return responseHandler.errResponse(res, error);
+  }
 };
 
 const getUserProfile = async (req, res) => {
