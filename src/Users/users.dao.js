@@ -12,9 +12,9 @@ export const selectUserById = async (connection, userId) => {
   const selectUserByIdQuery = `
         select id, email, name, phoneNumber, createAt, updateAt
         from Users
-        where id = ?;
+        where id=?;
       `;
-  const [rows] = await connection.query(selectUserByIdQuery);
+  const [rows] = await connection.query(selectUserByIdQuery, userId);
 
   return rows;
 };

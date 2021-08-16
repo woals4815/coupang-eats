@@ -1,15 +1,19 @@
 const jwt = require("jsonwebtoken");
-const secret_config = require("./secret");
-const { response } = require("./response");
-const { errResponse } = require("./response");
-const baseResponse = require("./baseResponseStatus");
+const { default: baseResponse } = require("./baseResponse");
+const { default: responseHandler } = require("./responseHandler");
 
 const jwtMiddleware = (req, res, next) => {
   // read the token from header or url
-  const token = req.headers["x-access-token"] || req.query.token;
+  const token = req.headers["x-jwt"] || req.query.token;
   // token does not exist
   if (!token) {
-    return res.send(errResponse(baseResponse.TOKEN_EMPTY));
+    return responseHandler.errResponse(res, baseResponse.TOKEN_EMPTY);
+  } else {
+    const verifyResult = jwt.verify(token, process.env.JWT_SECRET);
+    if (verifyResult) {
+      req.userId = verifyResult.userId;
+      next();
+    }
   }
 
   // create a promise that decodes the token

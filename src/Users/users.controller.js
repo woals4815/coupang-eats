@@ -51,6 +51,22 @@ const getUserById = async (req, res) => {
   try {
   } catch (error) {}
 };
+
+const getUserProfile = async (req, res) => {
+  const { userId } = req;
+  try {
+    const { result, error } = await userProvider.retrieveUserById(userId);
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    console.log(error);
+    return responseHandler.errResponse(res, error);
+  }
+};
+
 const postLogin = async (req, res) => {
   const {
     body: { email, password },
@@ -75,6 +91,7 @@ const userController = {
   postUser,
   postLogin,
   getUserById,
+  getUserProfile,
 };
 
 export default userController;

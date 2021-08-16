@@ -11,7 +11,11 @@
     - user join[X]
         - local login 
     - user login[X]
-        - jwt token 반환
+        - jwt token 반환[X]
+    - user profile[X]
+        - jwt middleware[X]
+            - 요청 객체에 userId를 넣어서 userId로 유저 조회 함[X]
+        - token verify[X]
 * Category
 
 * Restaurant
@@ -22,6 +26,12 @@
 * Order
 * Favoriete
 * Review
+
+* Response
+    - Add base response[X]
+    - Add response handler
+        - success handler[X]
+        - error handler[X]
 
 * devops
     - EC2 server에 git clone
