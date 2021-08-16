@@ -27,6 +27,10 @@
 * Favoriete
 * Review
 
+* Location
+    - restaurant location
+    - user location
+
 * Response
     - Add base response[X]
     - Add response handler
