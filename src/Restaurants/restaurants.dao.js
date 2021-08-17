@@ -32,6 +32,26 @@ export const selectRestaurantById = async (connection, restaurantId) => {
   return rows;
 };
 
+export const selectRestaurantsByKeyword = async (connection, keyword) => {
+  const selectParams = `%${keyword}%`;
+  const selectRestaurantsByKeywordQuery = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName
+    latitude, longitude, menuName
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    where concat(name) like ?;
+  `;
+  const [rows] = await connection.query(
+    selectRestaurantsByKeywordQuery,
+    selectParams
+  );
+
+  return rows;
+};
+
 export const insertRestaurant = async (connection, insertParams) => {
   const insertRestaurantQuery = `
         insert into Restaurants(name, minOrderPrice, categoryId, locationId, delieveryFee)

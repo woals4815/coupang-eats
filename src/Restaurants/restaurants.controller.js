@@ -3,13 +3,27 @@ import restaurantProvider from "./restaurants.provider";
 import restaurantService from "./restaurants.service";
 
 const getRestaurants = async (req, res) => {
+  const {
+    query: { search },
+  } = req;
   try {
-    const { result, error } = await restaurantProvider.retrieveRestaurants();
-
-    if (result) {
-      return responseHandler.successResponse(res, result);
+    if (search) {
+      const { result, error } =
+        await restaurantProvider.retrieveRestaurantsByKeyword(search);
+      console.log(result);
+      if (result) {
+        return responseHandler.successResponse(res, result);
+      } else {
+        throw error;
+      }
     } else {
-      throw error;
+      const { result, error } = await restaurantProvider.retrieveRestaurants();
+
+      if (result) {
+        return responseHandler.successResponse(res, result);
+      } else {
+        throw error;
+      }
     }
   } catch (error) {
     console.log(error);
@@ -61,7 +75,17 @@ const getRestaurantById = async (req, res) => {
 
 //이건 메뉴도 냉면이 있는지 검색해야 함
 const getRestaurantByKeyword = async (req, res) => {
+  const {
+    query: { search },
+  } = req;
   try {
+    const { result, error } =
+      await restaurantProvider.retrieveRestaurantsByKeyword(search);
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
   } catch (error) {
     console.log(error);
     return responseHandler.errResponse(res, error);

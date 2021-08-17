@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import foodCategoryRouter from "./Routers/categoryRouter";
 import locationRouter from "./Routers/locationRouter";
+import menuRouter from "./Routers/menuRouter";
 import restaurantRouter from "./Routers/restauratantRouter";
 import userRouter from "./Routers/userRouter";
 import routes from "./routes";
@@ -15,6 +16,8 @@ const app = () => {
   app.use(routes.categories, foodCategoryRouter);
   app.use(routes.locations, locationRouter);
   app.use(routes.restaurants, restaurantRouter);
+  app.use(routes.menus, menuRouter);
+
   return app;
 };
 

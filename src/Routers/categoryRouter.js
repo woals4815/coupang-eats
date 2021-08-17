@@ -1,5 +1,6 @@
 import express from "express";
 import foodCategoriesController from "../Categories/FoodCategories/foodCategories.controller";
+import menuCategoryController from "../Categories/MenuCategories/menuCategories.controller";
 import routes from "../routes";
 const foodCategoryRouter = express.Router();
 
@@ -19,8 +20,8 @@ foodCategoryRouter.get(routes.infoCategory);
 foodCategoryRouter.post(routes.infoCategory);
 
 //특정 식당 메뉴 카테고리
-foodCategoryRouter.get(routes.menuCategory);
-foodCategoryRouter.post(routes.menuCategory);
+foodCategoryRouter.get(routes.menus, menuCategoryController.getMenuCategories);
+foodCategoryRouter.post(routes.menus, menuCategoryController.postMenuCategory);
 
 //특정 메뉴 옵션 카테고리
 foodCategoryRouter.get(routes.optionCategory);

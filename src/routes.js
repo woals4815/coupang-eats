@@ -13,6 +13,8 @@ const OPTION_CATEGORY = "/option-category";
 const LOCATIONS = "/locations";
 const RESTAURANT_LOCATIONS_DETAIL = "/restaurants/:restaurantId";
 const USER_LOCATIONS_DETAIL = "/users/:userId";
+const MENUS = "/menus";
+const MENU_DETAIL = "/:menuId";
 
 const routes = {
   start: START_POINT,
@@ -30,6 +32,8 @@ const routes = {
   locations: LOCATIONS,
   restaurantLocationDetail: RESTAURANT_LOCATIONS_DETAIL,
   userLocationDetail: USER_LOCATIONS_DETAIL,
+  menus: MENUS,
+  menuDetail: MENU_DETAIL,
 };
 
 export default routes;
