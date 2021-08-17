@@ -86,6 +86,7 @@ const postLogin = async (req, res) => {
     await validationSchema.validateLoginBody({ email, password });
 
     const { result, error } = await userService.loginUser({ email, password });
+    console.log(error);
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {

@@ -48,7 +48,11 @@ const loginUser = async ({ email, password }) => {
   try {
     const [user] = await selectUserByEmail(connection, email);
     if (!user) {
-      throw baseResponse.USER_USEREMAIL_NOT_EXIST;
+      const result = {
+        ...baseResponse.USER_USEREMAIL_NOT_EXIST,
+        result: { token: null },
+      };
+      return { result };
     }
     const ok = await bcrypt.compare(password, user.password);
     let token = "";
@@ -58,7 +62,11 @@ const loginUser = async ({ email, password }) => {
       const result = { ...baseResponse.LOGIN_SUCCESS, result: { token } };
       return { result };
     } else {
-      throw baseResponse.SIGNIN_PASSWORD_WRONG;
+      const result = {
+        ...baseResponse.SIGNIN_PASSWORD_WRONG,
+        result: { token: null },
+      };
+      return { result };
     }
   } catch (error) {
     console.log(error);

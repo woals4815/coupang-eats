@@ -13,8 +13,8 @@ const successResponse = (res, { isSuccess, code, message, result }) => {
       message: message,
       result: result,
     });
-  } else {
-    return res.status(200).json({
+  } else if (code === 3004 || 2015) {
+    return res.status(400).json({
       isSuccess: isSuccess,
       code: code,
       message: message,
