@@ -1,4 +1,4 @@
-const insertMenuCategory = async (connection, insertParams) => {
+export const insertMenuCategory = async (connection, insertParams) => {
   const insertMenuCategoryQuery = `
         insert into MenuCategories(categoryName, restaurantId)
         values(?,?)

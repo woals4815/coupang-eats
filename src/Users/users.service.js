@@ -28,7 +28,10 @@ const createUser = async ({ email, password, name, phoneNumber }) => {
     const insertResult = await insertUser(connection, insertParams);
 
     await connection.commit();
-    const result = { ...baseResponse.SUCCESS, result: insertResult.insertId };
+    const result = {
+      ...baseResponse.SUCCESS,
+      result: `생성된 데이터 id: ${insertResult.insertId}`,
+    };
 
     return { result };
   } catch (error) {

@@ -1,5 +1,6 @@
 import baseResponse from "../../Config/baseResponse";
 import pool from "../../Config/db";
+import { insertMenuCategory } from "./menuCategories.dao";
 
 const createMenuCategory = async ({ categoryName, restaurantId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
