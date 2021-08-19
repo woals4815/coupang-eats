@@ -15,6 +15,9 @@ const RESTAURANT_LOCATIONS_DETAIL = "/restaurants/:restaurantId";
 const USER_LOCATIONS_DETAIL = "/users/:userId";
 const MENUS = "/menus";
 const MENU_DETAIL = "/:menuId";
+const CARTS = "/carts";
+const CART_DETAIL = "/:cartId";
+const OPTIONS = "/options";
 
 const routes = {
   start: START_POINT,
@@ -34,6 +37,9 @@ const routes = {
   userLocationDetail: USER_LOCATIONS_DETAIL,
   menus: MENUS,
   menuDetail: MENU_DETAIL,
+  carts: CARTS,
+  cartDetail: CART_DETAIL,
+  options: OPTIONS,
 };
 
 export default routes;

@@ -1,12 +1,12 @@
 import responseHandler from "../../Config/responseHandler";
-import menuCategoriesProvider from "./menuCategories.provider";
-import menuCategoryService from "./menuCategories.service";
+import optionProvider from "./options.provider";
+import optionService from "./options.service";
 
-const getMenuCategories = async (req, res) => {
+const getOptions = async (req, res) => {
   const { query } = req;
   try {
-    const { result, error } =
-      await menuCategoriesProvider.getMenuCategoryByRestaurantId(query);
+    const { result, error } = await optionProvider.retrieveOptions(query);
+
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {
@@ -18,12 +18,11 @@ const getMenuCategories = async (req, res) => {
   }
 };
 
-const postMenuCategory = async (req, res) => {
+const postOption = async (req, res) => {
   const { body } = req;
   try {
-    const { result, error } = await menuCategoryService.createMenuCategory(
-      body
-    );
+    const { result, error } = await optionService.createOption(body);
+
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {
@@ -35,9 +34,9 @@ const postMenuCategory = async (req, res) => {
   }
 };
 
-const menuCategoryController = {
-  getMenuCategories,
-  postMenuCategory,
+const optionController = {
+  getOptions,
+  postOption,
 };
 
-export default menuCategoryController;
+export default optionController;

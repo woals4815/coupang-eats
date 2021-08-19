@@ -1,23 +1,25 @@
 import baseResponse from "../../Config/baseResponse";
 import pool from "../../Config/db";
 import {
-  selectAllMenuCategories,
-  selectMenuCategoryByRestaurant,
-} from "./menuCategories.dao";
+  insertOptionCategory,
+  selectAllOptionCategories,
+  selectOptionCategoriesByMenu,
+} from "./optionCategory.dao";
 
-const getMenuCategoryByRestaurantId = async (query) => {
+const retrieveOptionCategories = async ({ menuId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
-  const { restaurantId } = query;
   try {
-    if (restaurantId) {
-      const selectResult = await selectMenuCategoryByRestaurant(
+    if (menuId) {
+      const selectResult = await selectOptionCategoriesByMenu(
         connection,
-        restaurantId
+        menuId
       );
+
       const result = { ...baseResponse.SUCCESS, result: selectResult };
+
       return { result };
     } else {
-      const selectResult = await selectAllMenuCategories(connection);
+      const selectResult = await selectAllOptionCategories(connection);
 
       const result = { ...baseResponse.SUCCESS, result: selectResult };
 
@@ -31,8 +33,8 @@ const getMenuCategoryByRestaurantId = async (query) => {
   }
 };
 
-const menuCategoriesProvider = {
-  getMenuCategoryByRestaurantId,
+const optionCategoryProvider = {
+  retrieveOptionCategories,
 };
 
-export default menuCategoriesProvider;
+export default optionCategoryProvider;
