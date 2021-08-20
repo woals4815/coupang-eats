@@ -1,11 +1,31 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
-import { selectCarts } from "./carts.dao";
+import { selectCarts, selectOptionCarts } from "./carts.dao";
 
-const retrieveCarts = async () => {
+const retrieveCarts = async (userId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectCarts(connection);
+    const selectCartResult = await selectCarts(connection, userId);
+    const selectOptionCartResult = await selectOptionCarts(connection, userId);
+    const totalResult = {
+      carts: selectCartResult,
+      optionCarts: selectOptionCartResult,
+    };
+    const result = { ...baseResponse.SUCCESS, result: totalResult };
+
+    return { result };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
+const retrieveOptionCarts = async (userId) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    const selectResult = await selectOptionCarts(connection, userId);
 
     const result = { ...baseResponse.SUCCESS, result: selectResult };
 
@@ -13,9 +33,11 @@ const retrieveCarts = async () => {
   } catch (error) {
     console.log(error);
     return { error };
+  } finally {
+    connection.release();
   }
 };
 
-const cartProvider = { retrieveCarts };
+const cartProvider = { retrieveCarts, retrieveOptionCarts };
 
 export default cartProvider;

@@ -13,7 +13,10 @@ const createOptionCategory = async ({
     const insertParams = [categoryName, isRequired, menuId, restaurantId];
     const insertResult = await insertOptionCategory(connection, insertParams);
 
-    const result = { ...baseResponse.CREATE_SUCCESS, result: insertResult };
+    const result = {
+      ...baseResponse.CREATE_SUCCESS,
+      result: `생성된 데이터 id: ${insertResult.insertId}`,
+    };
 
     return { result };
   } catch (error) {

@@ -19,19 +19,17 @@ const validatePostUserBody = async ({ email, password, phoneNumber, name }) => {
   return validationResult;
 };
 
-const validatePostCart = async ({ userId, menuId, menuCounts, payway }) => {
+const validatePostCart = async ({ userId, menuId, menuCounts }) => {
   const schema = Joi.object().keys({
     userId: Joi.number().required(),
     menuId: Joi.number().required(),
     menuCounts: Joi.number().required(),
-    payway: Joi.string().required(),
   });
 
   const validationResult = await schema.validateAsync({
     userId,
     menuId,
     menuCounts,
-    payway,
   });
 
   return validationResult;

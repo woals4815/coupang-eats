@@ -2,16 +2,16 @@ import baseResponse from "../../Config/baseResponse";
 import pool from "../../Config/db";
 import { selectAllMenus } from "./menus.dao";
 
-const retrieveMenus = async (query) => {
+const retrieveMenus = async ({ restaurantId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    if (!query) {
+    if (restaurantId) {
+    } else {
       const selectResult = await selectAllMenus(connection);
 
-      const result = { ...baseResponse.SUCCESS, selectResult };
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
 
       return { result };
-    } else {
     }
   } catch (error) {
     console.log(error);

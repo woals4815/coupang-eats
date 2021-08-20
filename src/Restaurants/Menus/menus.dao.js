@@ -1,12 +1,12 @@
 export const selectAllMenus = async (connection) => {
   const selectAllMenusQuery = `
-        select id, menuName, Menu.restaurantId, price, categoryId
+        select Menu.id, menuName, Menu.restaurantId, price, Menu.categoryId
         categoryName, name
         from Menu
         join Restaurants
         on Restaurants.id = Menu.restaurantId
         join MenuCategories
-        from MenuCategories.id = Menu.categoryId
+        on MenuCategories.id = Menu.categoryId
     `;
   const [rows] = await connection.query(selectAllMenusQuery);
 
@@ -19,7 +19,7 @@ export const insertMenu = async (connection, insertParams) => {
         values(?,?,?,?)
     `;
 
-  const [rows] = await connection.query(insertParams);
+  const [rows] = await connection.query(insertMenuQuery, insertParams);
 
   return rows;
 };

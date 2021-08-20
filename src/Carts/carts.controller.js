@@ -4,8 +4,9 @@ import cartProvider from "./carts.provider";
 import cartService from "./carts.service";
 
 const getCarts = async (req, res) => {
+  const { userId } = req;
   try {
-    const { result, error } = await cartProvider.retrieveCarts();
+    const { result, error } = await cartProvider.retrieveCarts(userId);
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {
@@ -52,10 +53,27 @@ const postOptionCart = async (req, res) => {
   }
 };
 
+const getOptionCarts = async (req, res) => {
+  const { userId } = req;
+  try {
+    const { result, error } = await cartProvider.retrieveOptionCarts(userId);
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    console.log(error);
+
+    return responseHandler.errResponse(res, error);
+  }
+};
+
 const cartController = {
   getCarts,
   postCart,
   postOptionCart,
+  getOptionCarts,
 };
 
 export default cartController;

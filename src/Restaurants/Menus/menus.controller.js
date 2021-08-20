@@ -21,6 +21,7 @@ const getMenus = async (req, res) => {
 //식당 메뉴 생성
 const postMenu = async (req, res) => {
   const { body } = req;
+
   try {
     const { result, error } = await menuService.createMenu(body);
 

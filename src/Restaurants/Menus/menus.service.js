@@ -10,12 +10,12 @@ const createMenu = async ({ categoryId, menuName, restaurantId, price }) => {
     const insertParams = [categoryId, menuName, restaurantId, price];
     const insertResult = await insertMenu(connection, insertParams);
 
-    await connection.commit();
     const result = {
       ...baseResponse.CREATE_SUCCESS,
       result: `생성된 데이터 id: ${insertResult.insertId}`,
     };
 
+    await connection.commit();
     return result;
   } catch (error) {
     console.log(error);

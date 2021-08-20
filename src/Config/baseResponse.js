@@ -116,6 +116,12 @@ const baseResponse = {
     message: "회원 상태값을 입력해주세요",
   },
 
+  OPTION_ID_EMPTY: {
+    isSuccess: false,
+    code: 2019,
+    message: "필수 옵션의 id를 입력해주세요",
+  },
+
   // Response error
   SIGNUP_REDUNDANT_EMAIL: {
     isSuccess: false,
