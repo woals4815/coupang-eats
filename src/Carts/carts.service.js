@@ -2,7 +2,7 @@ import optionCategoryProvider from "../Categories/OptionCategories/optionCategor
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import menuProvider from "../Restaurants/Menus/menus.provider";
-import { insertCart, insertOptionCart } from "./carts.dao";
+import { insertCart, insertOptionCart, updateCartOrdered } from "./carts.dao";
 import cartProvider from "./carts.provider";
 
 const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
@@ -108,9 +108,34 @@ const createOptionCart = async ({ optionId, cartId }) => {
   }
 };
 
+const editCartOrdered = async ({ cartId, userId }) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    await connection.beginTransaction();
+
+    const updateParams = [cartId, userId];
+    const updateResult = await updateCartOrdered(connection, updateParams);
+    await connection.commit();
+
+    const result = {
+      ...baseResponse.UPDATE_SUCCEES,
+      result: `업데이트 된 데이터 id: ${cartId}`,
+    };
+
+    return { result };
+  } catch (error) {
+    console.log(error);
+    await connection.rollback();
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
 const cartService = {
   createCart,
   createOptionCart,
+  editCartOrdered,
 };
 
 export default cartService;

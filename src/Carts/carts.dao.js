@@ -51,3 +51,15 @@ export const selectOptionCarts = async (connection, userId) => {
 
   return rows;
 };
+
+export const updateCartOrdered = async (connection, updateParams) => {
+  const updateCartOrderedQuery = `
+    update Carts
+    set isOrdered=1
+    where Carts.id=? and Carts.userId = ?
+  `;
+
+  const [rows] = await connection.query(updateCartOrderedQuery, updateParams);
+
+  return rows;
+};

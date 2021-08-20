@@ -3,6 +3,7 @@ const baseResponse = {
   SUCCESS: { isSuccess: true, code: 1000, message: "성공" },
   LOGIN_SUCCESS: { isSuccess: true, code: 1001, message: "로그인 성공" },
   CREATE_SUCCESS: { isSuccess: true, code: 1001, message: "생성 성공" },
+  UPDATE_SUCCEES: { isSuccess: true, code: 1001, message: "업데이트 성공" },
   // Common
   TOKEN_EMPTY: {
     isSuccess: false,

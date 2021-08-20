@@ -18,6 +18,7 @@ const MENU_DETAIL = "/:menuId";
 const CARTS = "/carts";
 const CART_DETAIL = "/:cartId";
 const OPTIONS = "/options";
+const ORDERS = "/orders";
 
 const routes = {
   start: START_POINT,
@@ -40,6 +41,7 @@ const routes = {
   carts: CARTS,
   cartDetail: CART_DETAIL,
   options: OPTIONS,
+  orders: ORDERS,
 };
 
 export default routes;
