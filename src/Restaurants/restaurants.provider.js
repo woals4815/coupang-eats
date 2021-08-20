@@ -4,6 +4,9 @@ import {
   selectRestaurantById,
   selectRestaurants,
   selectRestaurantsByKeyword,
+  selectRestaurantsByKeywordOrderBest,
+  selectRestaurantsByKeywordOrderMany,
+  selectRestaurantsByKeywordOrderNew,
   selectRestaurantsOrderBest,
   selectRestaurantsOrderMany,
   selectRestaurantsOrderNew,
@@ -84,11 +87,63 @@ const retrieveRestaurantById = async (restaurantId) => {
 const retrieveRestaurantsByKeyword = async (keyword, order) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectRestaurantsByKeyword(connection, keyword);
+    if (order === "many") {
+      const selectResult = await selectRestaurantsByKeywordOrderMany(
+        connection,
+        keyword
+      );
 
-    const result = { ...baseResponse.SUCCESS, result: selectResult };
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
 
-    return { result };
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else if (order === "best") {
+      const selectResult = await selectRestaurantsByKeywordOrderBest(
+        connection,
+        keyword
+      );
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else if (order === "new") {
+      const selectResult = await selectRestaurantsByKeywordOrderNew(
+        connection,
+        keyword
+      );
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else {
+      const selectResult = await selectRestaurantsByKeyword(
+        connection,
+        keyword
+      );
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    }
   } catch (error) {
     console.log(error);
     return { error };

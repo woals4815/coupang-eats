@@ -115,6 +115,78 @@ export const selectRestaurantsByKeyword = async (connection, keyword) => {
   return rows;
 };
 
+export const selectRestaurantsByKeywordOrderNew = async (
+  connection,
+  keyword
+) => {
+  const selectParams = `%${keyword}%`;
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    where concat(name) like ?
+    group by Restaurants.id
+    order by Restaurants.createAt desc;
+  `;
+  const [rows] = await connection.query(query, selectParams);
+
+  return rows;
+};
+
+export const selectRestaurantsByKeywordOrderBest = async (
+  connection,
+  keyword
+) => {
+  const selectParams = `%${keyword}%`;
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    where concat(name) like ?
+    group by Restaurants.id
+    order by avg(rating);
+  `;
+  const [rows] = await connection.query(query, selectParams);
+
+  return rows;
+};
+
+export const selectRestaurantsByKeywordOrderMany = async (
+  connection,
+  keyword
+) => {
+  const selectParams = `%${keyword}%`;
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    where concat(name) like ?
+    group by Restaurants.id
+    order by count(Reviews.id);
+  `;
+  const [rows] = await connection.query(query, selectParams);
+
+  return rows;
+};
+
 export const insertRestaurant = async (connection, insertParams) => {
   const insertRestaurantQuery = `
         insert into Restaurants(name, minOrderPrice, categoryId, locationId, delieveryFee)
