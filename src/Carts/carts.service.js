@@ -73,7 +73,10 @@ const createOptionCart = async ({ optionId, cartId }) => {
 
     const insertResult = await insertOptionCart(connection, insertParams);
 
-    const result = { ...baseResponse.CREATE_SUCCESS, result: insertResult };
+    const result = {
+      ...baseResponse.CREATE_SUCCESS,
+      result: `생성된 데이터 id: ${insertResult}`,
+    };
 
     await connection.commit();
 
