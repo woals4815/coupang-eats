@@ -4,20 +4,21 @@ import restaurantService from "./restaurants.service";
 
 const getRestaurants = async (req, res) => {
   const {
-    query: { search },
+    query: { search, order },
   } = req;
   try {
     if (search) {
       const { result, error } =
-        await restaurantProvider.retrieveRestaurantsByKeyword(search);
-      console.log(result);
+        await restaurantProvider.retrieveRestaurantsByKeyword(search, order);
       if (result) {
         return responseHandler.successResponse(res, result);
       } else {
         throw error;
       }
     } else {
-      const { result, error } = await restaurantProvider.retrieveRestaurants();
+      const { result, error } = await restaurantProvider.retrieveRestaurants(
+        order
+      );
 
       if (result) {
         return responseHandler.successResponse(res, result);

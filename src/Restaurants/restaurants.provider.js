@@ -4,16 +4,58 @@ import {
   selectRestaurantById,
   selectRestaurants,
   selectRestaurantsByKeyword,
+  selectRestaurantsOrderBest,
+  selectRestaurantsOrderMany,
+  selectRestaurantsOrderNew,
 } from "./restaurants.dao";
 
-const retrieveRestaurants = async () => {
+const retrieveRestaurants = async (order) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectRestaurants(connection);
+    if (order === "many") {
+      const selectResult = await selectRestaurantsOrderMany(connection);
 
-    const result = { ...baseResponse.SUCCESS, result: selectResult };
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
 
-    return { result };
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else if (order === "new") {
+      const selectResult = await selectRestaurantsOrderNew(connection);
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else if (order === "best") {
+      const selectResult = await selectRestaurantsOrderBest(connection);
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else {
+      const selectResult = await selectRestaurants(connection);
+
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    }
   } catch (error) {
     console.log(error);
     return { error };
@@ -39,7 +81,7 @@ const retrieveRestaurantById = async (restaurantId) => {
   }
 };
 
-const retrieveRestaurantsByKeyword = async (keyword) => {
+const retrieveRestaurantsByKeyword = async (keyword, order) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const selectResult = await selectRestaurantsByKeyword(connection, keyword);

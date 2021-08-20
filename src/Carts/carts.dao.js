@@ -1,7 +1,7 @@
 export const selectCarts = async (connection, userId) => {
   const selectCartsQuery = `
         select Carts.id as cartId, menuCounts, isOrdered, Carts.menuId, price, menuName,
-        Carts.userId, Users.name as userName, Restaurants.name as restaurantName, delieveryFee, Carts.createAt, Carts.updateAt
+        Carts.userId, Users.name as userName, Menu.restaurantId, Restaurants.name as restaurantName, delieveryFee, Carts.createAt, Carts.updateAt
         from Carts
         join Users
         on Users.id = Carts.userId

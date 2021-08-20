@@ -1,13 +1,29 @@
 import optionCategoryProvider from "../Categories/OptionCategories/optionCategory.provider";
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
+import menuProvider from "../Restaurants/Menus/menus.provider";
 import { insertCart, insertOptionCart } from "./carts.dao";
+import cartProvider from "./carts.provider";
 
 const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     await connection.beginTransaction();
 
+    const { result: alreadyExistCart } = await cartProvider.retrieveCarts(
+      userId
+    );
+    const { result: menuResult } = await menuProvider.retrieveMenuById(menuId);
+    const restaurantId = menuResult.result[0].restaurantId;
+
+    //이미 카트에 담겨있는 메뉴들의 식당 id가 지금 받은 menuId로 가져온 메뉴 id로 검색한 식당 id랑 다르면 throw error 해야 한다
+    const isDifferent = alreadyExistCart?.result?.carts?.some(
+      (item) => item.restaurantId !== restaurantId
+    );
+    //식당 id와 다를 때 throw error
+    if (isDifferent) {
+      throw baseResponse.DIFFERENT_RESTAURANT;
+    }
     //여기서 menuId를 받아온 다음, MenuOptions에서 required 인 옵션을 찾는다. 만약에 required이라면 if 문으로
     //createOptionCart를 생성해야 한다
     const { result: optionCategoryResult } =

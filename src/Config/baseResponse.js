@@ -21,6 +21,11 @@ const baseResponse = {
   }, // ?
 
   //Request error
+  DIFFERENT_RESTAURANT: {
+    isSuccess: false,
+    code: 2020,
+    message: "같은 식당의 메뉴만 담을 수 있습니다.",
+  },
   SIGNUP_EMAIL_EMPTY: {
     isSuccess: false,
     code: 2001,

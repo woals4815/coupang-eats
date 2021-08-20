@@ -23,3 +23,17 @@ export const insertMenu = async (connection, insertParams) => {
 
   return rows;
 };
+
+export const selectMenuById = async (connection, menuId) => {
+  const selectMenuByIdQuery = `
+    select Menu.id, menuName, Menu.restaurantId, price, name
+    from Menu
+    join Restaurants
+    on Restaurants.id = Menu.restaurantId
+    join MenuCategories
+    where Menu.id = ?
+  `;
+  const [rows] = await connection.query(selectMenuByIdQuery, menuId);
+
+  return rows;
+};
