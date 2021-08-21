@@ -62,7 +62,11 @@ const baseResponse = {
     code: 2007,
     message: "닉네임은 최대 20자리를 입력해주세요.",
   },
-
+  NOT_ORDER: {
+    isSuccess: false,
+    code: 2021,
+    message: "리뷰는 주문을 하고 작성하실 수 있습니다.",
+  },
   SIGNIN_EMAIL_EMPTY: {
     isSuccess: false,
     code: 2008,
