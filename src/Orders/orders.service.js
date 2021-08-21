@@ -11,10 +11,11 @@ const createOrder = async ({ cartId, userId }) => {
     const insertParams = [cartId, userId];
 
     const insertResult = await insertOrder(connection, insertParams);
-    const { result, error } = await cartService.editCartOrdered({
+    const { result: editResult, error } = await cartService.editCartOrdered({
       userId,
       cartId,
     });
+
     if (error) {
       throw error;
     }
@@ -23,6 +24,7 @@ const createOrder = async ({ cartId, userId }) => {
       ...baseResponse.CREATE_SUCCESS,
       result: `생성된 데이터 id: ${insertResult.insertId}`,
     };
+    await connection.commit();
 
     return { result };
   } catch (error) {

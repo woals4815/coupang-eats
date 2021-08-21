@@ -4,7 +4,7 @@
   "description": "coupang eats server web app clone",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "monit": "pm2 monit",
     "dev": "babel-node ./index.js",
     "pm2": "pm2 start npm -- run dev --watch"
@@ -33,6 +33,7 @@
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
     "@babel/node": "^7.14.9",
-    "@babel/preset-env": "^7.15.0"
+    "@babel/preset-env": "^7.15.0",
+    "jest": "^27.0.6"
   }
 }
