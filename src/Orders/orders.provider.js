@@ -2,6 +2,7 @@ import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import {
   selectOptionOrderByUserId,
+  selectOptionOrderCompleteByUserId,
   selectOrderByUserId,
   selectOrderComplete,
 } from "./orders.dao";
@@ -35,11 +36,15 @@ const retrieveCompleteOrder = async (userId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const selectOrderResult = await selectOrderComplete(connection, userId);
-
+    const selectOptionOrderResult = await selectOptionOrderCompleteByUserId(
+      connection,
+      userId
+    );
     const result = {
       ...baseResponse.SUCCESS,
       result: {
         selectOrderResult,
+        selectOptionOrderResult,
       },
     };
 
@@ -54,6 +59,7 @@ const retrieveCompleteOrder = async (userId) => {
 
 const orderProvider = {
   retrieveOrderByUserId,
+  retrieveCompleteOrder,
 };
 
 export default orderProvider;

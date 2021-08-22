@@ -22,6 +22,7 @@ const ORDERS = "/orders";
 const REVIEWS = "/reviews";
 const UPLOADS = "/uploads";
 const ORDER_DETAIL = "/:orderId";
+const HISTORY = "/history";
 
 const routes = {
   start: START_POINT,
@@ -48,6 +49,7 @@ const routes = {
   reviews: REVIEWS,
   uploads: UPLOADS,
   orderDetail: ORDER_DETAIL,
+  history: HISTORY,
 };
 
 export default routes;

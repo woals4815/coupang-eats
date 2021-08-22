@@ -12,7 +12,8 @@ export const insertOrder = async (connection, insertParams) => {
 export const selectOrderByUserId = async (connection, userId) => {
   const query = `
         select Orders.id, isComplete, Orders.userId, Orders.createAt,
-        menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName
+        menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName,
+        Carts.id as cartId
         from Orders
         join Users
         on Users.id = Orders.userId
@@ -24,7 +25,7 @@ export const selectOrderByUserId = async (connection, userId) => {
         on OptionCarts.cartId = Orders.cartId
         join MenuOptions
         on MenuOptions.id = OptionCarts.optionId
-        where Orders.userId = ?;
+        where Orders.userId = ? and isComplete=0;
     `;
   const [rows] = await connection.query(query, userId);
 
@@ -33,13 +34,13 @@ export const selectOrderByUserId = async (connection, userId) => {
 
 export const selectOptionOrderByUserId = async (connection, userId) => {
   const selectOptionOrderByUserIdQuery = `
-        select optionName, MenuOptions.price
+        select optionName, MenuOptions.price, OptionCarts.cartId
         from OptionCarts
         join Orders
         on OptionCarts.cartId = Orders.cartId
         join MenuOptions
         on MenuOptions.id = OptionCarts.optionId
-        where Orders.userId = ?
+        where Orders.userId = ? and Orders.isComplete=0;
     `;
   const [rows] = await connection.query(selectOptionOrderByUserIdQuery, userId);
 
@@ -60,7 +61,8 @@ export const updateOrderComplete = async (connection, orderId) => {
 export const selectOrderComplete = async (connection, userId) => {
   const selectOrderCompleteQuery = `
         select Orders.id, isComplete, Orders.userId, Orders.createAt,
-        menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName
+        menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName,
+        Carts.id as cartId
         from Orders
         join Users
         on Users.id = Orders.userId
@@ -75,6 +77,21 @@ export const selectOrderComplete = async (connection, userId) => {
         where Orders.userId = ? and isComplete=1; 
     `;
   const [rows] = await connection.query(selectOrderCompleteQuery, userId);
+
+  return rows;
+};
+
+export const selectOptionOrderCompleteByUserId = async (connection, userId) => {
+  const selectOptionOrderByUserIdQuery = `
+          select optionName, MenuOptions.price, OptionCarts.cartId
+          from OptionCarts
+          join Orders
+          on OptionCarts.cartId = Orders.cartId
+          join MenuOptions
+          on MenuOptions.id = OptionCarts.optionId
+          where Orders.userId = ? and Orders.isComplete=1;
+      `;
+  const [rows] = await connection.query(selectOptionOrderByUserIdQuery, userId);
 
   return rows;
 };
