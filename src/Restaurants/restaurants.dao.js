@@ -30,7 +30,7 @@ export const selectRestaurantsOrderBest = async (connection) => {
         group by Restaurants.id
         order by avg(rating)
     `;
-  const [rows] = await connection.query(selectRestaurantsQuery);
+  const [rows] = await connection.query(selectRestaurantsOrderBestQuery);
 
   return rows;
 };
@@ -193,6 +193,29 @@ export const insertRestaurant = async (connection, insertParams) => {
         values(?,?,?,?,?);
     `;
   const [rows] = await connection.query(insertRestaurantQuery, insertParams);
+
+  return rows;
+};
+
+export const insertRestaurantImg = async (connection, insertParams) => {
+  const insertRestaurantImgQuery = `
+    insert into RestaurantImages(imgUrl, restaurantId, isForMain)
+    values(?,?,?)
+  `;
+
+  const [rows] = await connection.query(insertRestaurantImgQuery, insertParams);
+
+  return rows;
+};
+
+export const selectRestaurantImg = async (connection, restaurantId) => {
+  const selectRestaurantImgQuery = `
+    select id, imgUrl, isForMain, restaurantId
+    from RestaurantImages
+    where restaurantId = ?;
+  `;
+
+  const [rows] = await connection.query(selectRestaurantImgQuery, restaurantId);
 
   return rows;
 };

@@ -20,6 +20,7 @@ const CART_DETAIL = "/:cartId";
 const OPTIONS = "/options";
 const ORDERS = "/orders";
 const REVIEWS = "/reviews";
+const UPLOADS = "/uploads";
 
 const routes = {
   start: START_POINT,
@@ -44,6 +45,7 @@ const routes = {
   options: OPTIONS,
   orders: ORDERS,
   reviews: REVIEWS,
+  uploads: UPLOADS,
 };
 
 export default routes;

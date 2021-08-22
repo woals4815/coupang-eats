@@ -2,6 +2,7 @@ import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import {
   selectRestaurantById,
+  selectRestaurantImg,
   selectRestaurants,
   selectRestaurantsByKeyword,
   selectRestaurantsByKeywordOrderBest,
@@ -71,8 +72,12 @@ const retrieveRestaurantById = async (restaurantId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     const selectResult = await selectRestaurantById(connection, restaurantId);
+    const { result: imgResult } = await retrieveRestaurantImg(restaurantId);
 
-    const result = { ...baseResponse.SUCCESS, result: selectResult };
+    const result = {
+      ...baseResponse.SUCCESS,
+      result: { restaurantResult: selectResult, imgResult: imgResult.result },
+    };
 
     return { result };
   } catch (error) {
@@ -152,10 +157,27 @@ const retrieveRestaurantsByKeyword = async (keyword, order) => {
   }
 };
 
+const retrieveRestaurantImg = async (restaurantId) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    const selectResult = await selectRestaurantImg(connection, restaurantId);
+
+    const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+    return { result };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
 const restaurantProvider = {
   retrieveRestaurants,
   retrieveRestaurantById,
   retrieveRestaurantsByKeyword,
+  retrieveRestaurantImg,
 };
 
 export default restaurantProvider;

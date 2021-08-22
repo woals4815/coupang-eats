@@ -8,6 +8,7 @@ import optionRouter from "./Routers/optionRouter";
 import orderRouter from "./Routers/orderRouter";
 import restaurantRouter from "./Routers/restauratantRouter";
 import reviewRouter from "./Routers/reviewRouter";
+import uploadRouter from "./Routers/uploadRouter";
 import userRouter from "./Routers/userRouter";
 import routes from "./routes";
 
@@ -25,6 +26,7 @@ const app = () => {
   app.use(routes.options, optionRouter);
   app.use(routes.orders, orderRouter);
   app.use(routes.reviews, reviewRouter);
+  app.use(routes.uploads, uploadRouter);
 
   return app;
 };
