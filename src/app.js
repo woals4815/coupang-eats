@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cartRotuer from "./Routers/cartRouter";
 import foodCategoryRouter from "./Routers/categoryRouter";
+import favoriteRouter from "./Routers/favoriteRouter";
 import locationRouter from "./Routers/locationRouter";
 import menuRouter from "./Routers/menuRouter";
 import optionRouter from "./Routers/optionRouter";
@@ -27,6 +28,7 @@ const app = () => {
   app.use(routes.orders, orderRouter);
   app.use(routes.reviews, reviewRouter);
   app.use(routes.uploads, uploadRouter);
+  app.use(routes.favorites, favoriteRouter);
 
   return app;
 };

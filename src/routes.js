@@ -23,6 +23,7 @@ const REVIEWS = "/reviews";
 const UPLOADS = "/uploads";
 const ORDER_DETAIL = "/:orderId";
 const HISTORY = "/history";
+const FAVORITES = "/favorites";
 
 const routes = {
   start: START_POINT,
@@ -50,6 +51,7 @@ const routes = {
   uploads: UPLOADS,
   orderDetail: ORDER_DETAIL,
   history: HISTORY,
+  favorites: FAVORITES,
 };
 
 export default routes;
