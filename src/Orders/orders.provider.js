@@ -1,6 +1,10 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
-import { selectOptionOrderByUserId, selectOrderByUserId } from "./orders.dao";
+import {
+  selectOptionOrderByUserId,
+  selectOrderByUserId,
+  selectOrderComplete,
+} from "./orders.dao";
 
 const retrieveOrderByUserId = async (userId) => {
   const connection = await pool.getConnection(async (conn) => conn);
@@ -15,6 +19,27 @@ const retrieveOrderByUserId = async (userId) => {
       result: {
         selectMenuOrderResult,
         selectOptionOrderResult,
+      },
+    };
+
+    return { result };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
+const retrieveCompleteOrder = async (userId) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    const selectOrderResult = await selectOrderComplete(connection, userId);
+
+    const result = {
+      ...baseResponse.SUCCESS,
+      result: {
+        selectOrderResult,
       },
     };
 

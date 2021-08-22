@@ -21,6 +21,7 @@ const OPTIONS = "/options";
 const ORDERS = "/orders";
 const REVIEWS = "/reviews";
 const UPLOADS = "/uploads";
+const ORDER_DETAIL = "/:orderId";
 
 const routes = {
   start: START_POINT,
@@ -46,6 +47,7 @@ const routes = {
   orders: ORDERS,
   reviews: REVIEWS,
   uploads: UPLOADS,
+  orderDetail: ORDER_DETAIL,
 };
 
 export default routes;

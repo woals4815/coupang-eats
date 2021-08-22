@@ -8,4 +8,6 @@ const orderRouter = express.Router();
 orderRouter.get(routes.start, jwtMiddleware, orderController.getUserOrders);
 orderRouter.post(routes.start, jwtMiddleware, orderController.postUserOrder);
 
+orderRouter.patch(routes.orderDetail, orderController.patchOrder);
+
 export default orderRouter;

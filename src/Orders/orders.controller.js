@@ -30,6 +30,23 @@ const postUserOrder = async (req, res) => {
       cartId,
       userId,
     });
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    console.log(error);
+    return responseHandler.errResponse(res, error);
+  }
+};
+
+const patchOrder = async (req, res) => {
+  const {
+    params: { orderId },
+  } = req;
+  try {
+    const { result, error } = await orderService.editOrderComplete(orderId);
 
     if (result) {
       return responseHandler.successResponse(res, result);
@@ -45,6 +62,7 @@ const postUserOrder = async (req, res) => {
 const orderController = {
   getUserOrders,
   postUserOrder,
+  patchOrder,
 };
 
 export default orderController;
