@@ -115,13 +115,13 @@ const editCartOrdered = async ({ cartId, userId }) => {
 
     const updateParams = [cartId, userId];
     const updateResult = await updateCartOrdered(connection, updateParams);
-    await connection.commit();
 
     const result = {
       ...baseResponse.UPDATE_SUCCEES,
       result: `업데이트 된 데이터 id: ${cartId}`,
     };
 
+    await connection.commit();
     return { result };
   } catch (error) {
     console.log(error);

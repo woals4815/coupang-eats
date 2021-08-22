@@ -9,7 +9,7 @@ export const selectCarts = async (connection, userId) => {
         on Menu.id = Carts.menuId
         join Restaurants
         on Restaurants.id = Menu.restaurantId
-        where userId = ? and isOrdered=0;
+        where userId = ? and isOrdered = 0;
     `;
   const [rows] = await connection.query(selectCartsQuery, userId);
 

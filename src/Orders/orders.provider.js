@@ -1,13 +1,22 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
-import { selectOrderByUserId } from "./orders.dao";
+import { selectOptionOrderByUserId, selectOrderByUserId } from "./orders.dao";
 
 const retrieveOrderByUserId = async (userId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectOrderByUserId(connection, userId);
-
-    const result = { ...baseResponse.SUCCESS, result: selectResult };
+    const selectMenuOrderResult = await selectOrderByUserId(connection, userId);
+    const selectOptionOrderResult = await selectOptionOrderByUserId(
+      connection,
+      userId
+    );
+    const result = {
+      ...baseResponse.SUCCESS,
+      result: {
+        selectMenuOrderResult,
+        selectOptionOrderResult,
+      },
+    };
 
     return { result };
   } catch (error) {

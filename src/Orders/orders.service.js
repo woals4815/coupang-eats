@@ -1,8 +1,10 @@
+import { updateCartOrdered } from "../Carts/carts.dao";
 import cartService from "../Carts/carts.service";
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import { insertOrder } from "./orders.dao";
 
+//주문 생성 함수
 const createOrder = async ({ cartId, userId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
@@ -11,14 +13,8 @@ const createOrder = async ({ cartId, userId }) => {
     const insertParams = [cartId, userId];
 
     const insertResult = await insertOrder(connection, insertParams);
-    const { result: editResult, error } = await cartService.editCartOrdered({
-      userId,
-      cartId,
-    });
 
-    if (error) {
-      throw error;
-    }
+    const updateResult = await updateCartOrdered(connection, insertParams);
 
     const result = {
       ...baseResponse.CREATE_SUCCESS,
@@ -29,7 +25,9 @@ const createOrder = async ({ cartId, userId }) => {
     return { result };
   } catch (error) {
     console.log(error);
+
     await connection.rollback();
+
     return { error };
   } finally {
     connection.release();
