@@ -30,3 +30,14 @@ export const insertFoodCategory = async (connection, categoryName) => {
 
   return rows;
 };
+
+export const insertCategoryImg = async (connection, insertParams) => {
+  const insertCategoryImgQuery = `
+    insert into CategoryImages(imgUrl, categoryId)
+    values(?,?);
+  `;
+
+  const [rows] = await connection.query(insertCategoryImgQuery, insertParams);
+
+  return rows;
+};

@@ -6,9 +6,15 @@ import uploadImg from "../Uploads/uploads.middleware";
 const uploadRouter = express.Router();
 
 uploadRouter.post(
-  routes.start,
+  routes.restaurants,
   uploadImg,
   uploadController.postUploadRestaurantImg
+);
+
+uploadRouter.post(
+  routes.categories,
+  uploadImg,
+  uploadController.postUploadCategoryImg
 );
 
 export default uploadRouter;

@@ -56,20 +56,22 @@ export const selectRestaurantsOrderNew = async (connection) => {
 
 export const selectRestaurantById = async (connection, restaurantId) => {
   const selectRestaurantByIdQuery = `
-        select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName
-        latitude, longitude
+        select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
         from Restaurants
         join Categories
         on Categories.id = Restaurants.categoryId
         join RestaurantLocations
         on RestaurantLocations.id = Restaurants.locationId
+        left join Reviews
+        on Reviews.restaurantId = Restaurants.id
         where Restaurants.id = ?
     `;
   const [rows] = await connection.query(
     selectRestaurantByIdQuery,
     restaurantId
   );
-
+  console.log(rows);
   return rows;
 };
 
@@ -216,6 +218,17 @@ export const selectRestaurantImg = async (connection, restaurantId) => {
   `;
 
   const [rows] = await connection.query(selectRestaurantImgQuery, restaurantId);
+
+  return rows;
+};
+
+export const selectAllRestaurantImg = async (connection) => {
+  const selectAllRestaurantImgQuery = `
+    select id, imgUrl, isForMain, restaurantId
+    from RestaurantImages;
+  `;
+
+  const [rows] = await connection.query(selectAllRestaurantImgQuery);
 
   return rows;
 };

@@ -1,6 +1,7 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import {
+  selectAllRestaurantImg,
   selectRestaurantById,
   selectRestaurantImg,
   selectRestaurants,
@@ -17,46 +18,81 @@ const retrieveRestaurants = async (order) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     if (order === "many") {
-      const selectResult = await selectRestaurantsOrderMany(connection);
-
-      selectResult.forEach((restaurant) => {
+      const selectRestaurantsResult = await selectRestaurantsOrderMany(
+        connection
+      );
+      const selectImgResult = await selectAllRestaurantImg(connection);
+      selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
       });
 
-      const result = { ...baseResponse.SUCCESS, result: selectResult };
+      const result = {
+        ...baseResponse.SUCCESS,
+        result: {
+          restaurantResult: selectRestaurantsResult,
+          imgResult: selectImgResult,
+        },
+      };
 
       return { result };
     } else if (order === "new") {
-      const selectResult = await selectRestaurantsOrderNew(connection);
+      const selectRestaurantsResult = await selectRestaurantsOrderNew(
+        connection
+      );
 
-      selectResult.forEach((restaurant) => {
+      const selectImgResult = await selectAllRestaurantImg(connection);
+
+      selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
       });
-      const result = { ...baseResponse.SUCCESS, result: selectResult };
+      const result = {
+        ...baseResponse.SUCCESS,
+        result: {
+          restaurantResult: selectRestaurantsResult,
+          imgResult: selectImgResult,
+        },
+      };
 
       return { result };
     } else if (order === "best") {
-      const selectResult = await selectRestaurantsOrderBest(connection);
+      const selectRestaurantsResult = await selectRestaurantsOrderBest(
+        connection
+      );
+      const selectImgResult = await selectAllRestaurantImg(connection);
 
-      selectResult.forEach((restaurant) => {
+      selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
       });
 
-      const result = { ...baseResponse.SUCCESS, result: selectResult };
+      const result = {
+        ...baseResponse.SUCCESS,
+        result: {
+          restaurantResult: selectRestaurantsResult,
+          imgResult: selectImgResult,
+        },
+      };
 
       return { result };
     } else {
-      const selectResult = await selectRestaurants(connection);
+      const selectRestaurantsResult = await selectRestaurants(connection);
 
-      selectResult.forEach((restaurant) => {
+      const selectImgResult = await selectAllRestaurantImg(connection);
+
+      selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
       });
 
-      const result = { ...baseResponse.SUCCESS, result: selectResult };
+      const result = {
+        ...baseResponse.SUCCESS,
+        result: {
+          restaurantResult: selectRestaurantsResult,
+          imgResult: selectImgResult,
+        },
+      };
 
       return { result };
     }
@@ -71,12 +107,23 @@ const retrieveRestaurants = async (order) => {
 const retrieveRestaurantById = async (restaurantId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectRestaurantById(connection, restaurantId);
+    const selectRestaurantsResult = await selectRestaurantById(
+      connection,
+      restaurantId
+    );
     const { result: imgResult } = await retrieveRestaurantImg(restaurantId);
+
+    selectRestaurantsResult.forEach((restaurant) => {
+      restaurant.ratingAvg =
+        restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+    });
 
     const result = {
       ...baseResponse.SUCCESS,
-      result: { restaurantResult: selectResult, imgResult: imgResult.result },
+      result: {
+        restaurantResult: selectRestaurantsResult,
+        imgResult: imgResult.result,
+      },
     };
 
     return { result };
