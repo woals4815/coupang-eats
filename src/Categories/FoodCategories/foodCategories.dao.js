@@ -1,8 +1,10 @@
 //음식 카테고리 전체 조회 접근
 export const selectFoodCategories = async (connection) => {
   const selectFoodCategoriesQuery = `
-          select id, categoryName
-          from Categories;
+          select Categories.id, categoryName, imgUrl
+          from Categories
+          left join CategoryImages
+          on CategoryImages.categoryId = Categories.id;
       `;
   const [rows] = await connection.query(selectFoodCategoriesQuery);
   return rows;
