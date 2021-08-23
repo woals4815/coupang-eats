@@ -56,3 +56,22 @@ export const selectMenuByRestaurantId = async (connection, restaurantId) => {
 
   return rows;
 };
+
+export const selectMenuByCategory = async (connection, selectParams) => {
+  const selectMenuByCategoryQuery = `
+    select menuName, Menu.restaurantId, MenuCategories.categoryName,
+    Menu.categoryId
+    from Menu
+    join MenuCategories
+    on MenuCategories.id = Menu.categoryId
+    join Restaurants
+    on Restaurants.id = Menu.restaurantId
+    where Menu.restaurantId =? and Menu.categoryId=?
+  `;
+  const [rows] = await connection.query(
+    selectMenuByCategoryQuery,
+    selectParams
+  );
+
+  return rows;
+};

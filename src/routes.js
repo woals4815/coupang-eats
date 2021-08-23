@@ -9,6 +9,7 @@ const CATEGORIES = "/categories";
 const FOOD_CATEGORY = "/food";
 const INFO_CATEGORY = "/info";
 const MENU_CATEGORY = "/menu";
+const CATEGORY_DETAIL = "/:categoryId";
 const OPTION_CATEGORY = "/option-category";
 const LOCATIONS = "/locations";
 const RESTAURANT_LOCATIONS_DETAIL = "/restaurants/:restaurantId";
@@ -52,6 +53,7 @@ const routes = {
   orderDetail: ORDER_DETAIL,
   history: HISTORY,
   favorites: FAVORITES,
+  categoryDetail: CATEGORY_DETAIL,
 };
 
 export default routes;
