@@ -22,7 +22,8 @@ export const selectRestaurants = async (connection) => {
 export const selectRestaurantsOrderBest = async (connection) => {
   const selectRestaurantsOrderBestQuery = `
         select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+        imgUrl
         from Restaurants
         join Categories
         on Categories.id = Restaurants.categoryId
@@ -30,6 +31,8 @@ export const selectRestaurantsOrderBest = async (connection) => {
         on RestaurantLocations.id = Restaurants.locationId
         left join Reviews
         on Reviews.restaurantId = Restaurants.id
+        left join RestaurantImages
+        on RestaurantImages.restaurantId = Restaurants.id
         group by Restaurants.id
         order by avg(rating)
     `;
@@ -41,7 +44,8 @@ export const selectRestaurantsOrderBest = async (connection) => {
 export const selectRestaurantsOrderNew = async (connection) => {
   const selectRestaurantsQuery = `
         select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+        imgUrl
         from Restaurants
         join Categories
         on Categories.id = Restaurants.categoryId
@@ -49,6 +53,8 @@ export const selectRestaurantsOrderNew = async (connection) => {
         on RestaurantLocations.id = Restaurants.locationId
         left join Reviews
         on Reviews.restaurantId = Restaurants.id
+        left join RestaurantImages
+        on RestaurantImages.restaurantId = Restaurants.id
         group by Restaurants.id
         order by Restaurants.createAt desc
     `;
@@ -81,7 +87,8 @@ export const selectRestaurantById = async (connection, restaurantId) => {
 export const selectRestaurantsOrderMany = async (connection) => {
   const selectRestaurantsOrderBestQuery = `
       select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-      latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+      latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+      imgUrl
       from Restaurants
       join Categories
       on Categories.id = Restaurants.categoryId
@@ -89,6 +96,8 @@ export const selectRestaurantsOrderMany = async (connection) => {
       on RestaurantLocations.id = Restaurants.locationId
       left join Reviews
       on Reviews.restaurantId = Restaurants.id
+      left join RestaurantImages
+      on RestaurantImages.restaurantId = Restaurants.id
       group by Restaurants.id
       order by count(Reviews.id) desc;
   `;
@@ -101,7 +110,8 @@ export const selectRestaurantsByKeyword = async (connection, keyword) => {
   const selectParams = `%${keyword}%`;
   const selectRestaurantsByKeywordQuery = `
     select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
     from Restaurants
     join Categories
     on Categories.id = Restaurants.categoryId
@@ -109,6 +119,8 @@ export const selectRestaurantsByKeyword = async (connection, keyword) => {
     on RestaurantLocations.id = Restaurants.locationId
     left join Reviews
     on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
     where concat(name) like ?
     group by Restaurants.id
   `;
@@ -127,7 +139,8 @@ export const selectRestaurantsByKeywordOrderNew = async (
   const selectParams = `%${keyword}%`;
   const query = `
     select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
     from Restaurants
     join Categories
     on Categories.id = Restaurants.categoryId
@@ -135,6 +148,8 @@ export const selectRestaurantsByKeywordOrderNew = async (
     on RestaurantLocations.id = Restaurants.locationId
     left join Reviews
     on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
     where concat(name) like ?
     group by Restaurants.id
     order by Restaurants.createAt desc;
@@ -151,7 +166,8 @@ export const selectRestaurantsByKeywordOrderBest = async (
   const selectParams = `%${keyword}%`;
   const query = `
     select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
     from Restaurants
     join Categories
     on Categories.id = Restaurants.categoryId
@@ -159,6 +175,8 @@ export const selectRestaurantsByKeywordOrderBest = async (
     on RestaurantLocations.id = Restaurants.locationId
     left join Reviews
     on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
     where concat(name) like ?
     group by Restaurants.id
     order by avg(rating);
@@ -175,7 +193,8 @@ export const selectRestaurantsByKeywordOrderMany = async (
   const selectParams = `%${keyword}%`;
   const query = `
     select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
     from Restaurants
     join Categories
     on Categories.id = Restaurants.categoryId
@@ -183,6 +202,8 @@ export const selectRestaurantsByKeywordOrderMany = async (
     on RestaurantLocations.id = Restaurants.locationId
     left join Reviews
     on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
     where concat(name) like ?
     group by Restaurants.id
     order by count(Reviews.id);
