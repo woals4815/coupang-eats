@@ -10,13 +10,13 @@ export const insertFavorites = async (connection, insertParams) => {
 
 export const selectUserFavorites = async (connection, userId) => {
   const selectUserFavoritesQuery = `
-    select UserFavorites.restaurantId, name, imgUrl
-    from UserFavorites
-    join Restaurants
-    on Restaurants.id = UserFavorites.restaurantId
-    join RestaurantImages
-    on RestaurantImages.restaurantId = UserFavorites.restaurantId
-    where UserFavorites.userId = ?;
+      select UserFavorites.restaurantId, name, imgUrl, UserFavorites.userId
+      from UserFavorites
+      join Restaurants
+      on Restaurants.id = UserFavorites.restaurantId
+      join RestaurantImages
+      on RestaurantImages.restaurantId = UserFavorites.restaurantId
+      where UserFavorites.userId = ?;
   `;
   const [rows] = await connection.query(selectUserFavoritesQuery, userId);
 

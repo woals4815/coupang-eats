@@ -131,7 +131,11 @@ const baseResponse = {
     code: 2019,
     message: "필수 옵션의 id를 입력해주세요",
   },
-
+  ALREADY_FAVORITE: {
+    isSuccess: false,
+    code: 2040,
+    message: "이미 찜 한 가게입니다.",
+  },
   // Response error
   SIGNUP_REDUNDANT_EMAIL: {
     isSuccess: false,
