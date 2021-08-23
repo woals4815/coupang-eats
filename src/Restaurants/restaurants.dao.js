@@ -1,7 +1,8 @@
 export const selectRestaurants = async (connection) => {
   const selectRestaurantsQuery = `
         select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
-        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg
+        latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+        imgUrl
         from Restaurants
         join Categories
         on Categories.id = Restaurants.categoryId
@@ -9,6 +10,8 @@ export const selectRestaurants = async (connection) => {
         on RestaurantLocations.id = Restaurants.locationId
         left join Reviews
         on Reviews.restaurantId = Restaurants.id
+        left join RestaurantImages
+        on RestaurantImages.restaurantId = Restaurants.id
         group by Restaurants.id
     `;
   const [rows] = await connection.query(selectRestaurantsQuery);

@@ -21,7 +21,6 @@ const retrieveRestaurants = async (order) => {
       const selectRestaurantsResult = await selectRestaurantsOrderMany(
         connection
       );
-      const selectImgResult = await selectAllRestaurantImg(connection);
       selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
@@ -31,7 +30,6 @@ const retrieveRestaurants = async (order) => {
         ...baseResponse.SUCCESS,
         result: {
           restaurantResult: selectRestaurantsResult,
-          imgResult: selectImgResult,
         },
       };
 
@@ -41,8 +39,6 @@ const retrieveRestaurants = async (order) => {
         connection
       );
 
-      const selectImgResult = await selectAllRestaurantImg(connection);
-
       selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
@@ -51,7 +47,6 @@ const retrieveRestaurants = async (order) => {
         ...baseResponse.SUCCESS,
         result: {
           restaurantResult: selectRestaurantsResult,
-          imgResult: selectImgResult,
         },
       };
 
@@ -60,7 +55,6 @@ const retrieveRestaurants = async (order) => {
       const selectRestaurantsResult = await selectRestaurantsOrderBest(
         connection
       );
-      const selectImgResult = await selectAllRestaurantImg(connection);
 
       selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
@@ -71,7 +65,6 @@ const retrieveRestaurants = async (order) => {
         ...baseResponse.SUCCESS,
         result: {
           restaurantResult: selectRestaurantsResult,
-          imgResult: selectImgResult,
         },
       };
 
@@ -79,8 +72,6 @@ const retrieveRestaurants = async (order) => {
     } else {
       const selectRestaurantsResult = await selectRestaurants(connection);
 
-      const selectImgResult = await selectAllRestaurantImg(connection);
-
       selectRestaurantsResult.forEach((restaurant) => {
         restaurant.ratingAvg =
           restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
@@ -90,7 +81,6 @@ const retrieveRestaurants = async (order) => {
         ...baseResponse.SUCCESS,
         result: {
           restaurantResult: selectRestaurantsResult,
-          imgResult: selectImgResult,
         },
       };
 
