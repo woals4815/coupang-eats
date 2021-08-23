@@ -1,7 +1,7 @@
 import express from "express";
 import locationController from "../Locations/locations.controller";
 import routes from "../routes";
-
+import jwtMiddleware from "../Config/jwtMiddleware";
 const locationRouter = express.Router();
 // /locations/restaurants
 locationRouter.get(
@@ -15,8 +15,16 @@ locationRouter.post(
 );
 
 // /locations/users
-locationRouter.get(routes.users, locationController.getUserLocations);
-locationRouter.post(routes.users, locationController.postUserLocation);
+locationRouter.get(
+  routes.users,
+  jwtMiddleware,
+  locationController.getUserLocationById
+);
+locationRouter.post(
+  routes.users,
+  jwtMiddleware,
+  locationController.postUserLocation
+);
 
 // /locations/restaurants/:restaurantId
 locationRouter.get(

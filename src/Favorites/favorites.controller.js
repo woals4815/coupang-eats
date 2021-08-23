@@ -1,10 +1,13 @@
 import responseHandler from "../Config/responseHandler";
+import validationSchema from "../Validations/validationSchema";
 import favoriteProvider from "./favorites.provider";
 import favoriteService from "./favorites.service";
 
 const getUserFavorites = async (req, res) => {
-  const { userId } = req;
+  let { userId } = req;
+  userId = Number(userId);
   try {
+    await validationSchema.validateNumber(userId);
     const { result, error } = await favoriteProvider.retrieveUserFavorites(
       userId
     );
@@ -21,11 +24,16 @@ const getUserFavorites = async (req, res) => {
 };
 
 const postFavorites = async (req, res) => {
-  const {
+  let {
     userId,
     body: { restaurantId },
   } = req;
+  userId = Number(userId);
+  restaurantId = Number(restaurantId);
   try {
+    await validationSchema.validateNumber(userId);
+    await validationSchema.validateNumber(restaurantId);
+
     const { result, error } = await favoriteService.createFavorites({
       userId,
       restaurantId,

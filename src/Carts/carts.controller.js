@@ -4,8 +4,11 @@ import cartProvider from "./carts.provider";
 import cartService from "./carts.service";
 
 const getCarts = async (req, res) => {
-  const { userId } = req;
+  let { userId } = req;
+  userId = Number(userId);
   try {
+    await validationSchema.validateNumber(userId);
+
     const { result, error } = await cartProvider.retrieveCarts(userId);
     if (result) {
       return responseHandler.successResponse(res, result);
@@ -54,8 +57,11 @@ const postOptionCart = async (req, res) => {
 };
 
 const getOptionCarts = async (req, res) => {
-  const { userId } = req;
+  let { userId } = req;
+  userId = Number(userId);
   try {
+    await validationSchema.validateNumber(userId);
+
     const { result, error } = await cartProvider.retrieveOptionCarts(userId);
     if (result) {
       return responseHandler.successResponse(res, result);

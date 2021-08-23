@@ -1,4 +1,5 @@
 import responseHandler from "../Config/responseHandler";
+import validationSchema from "../Validations/validationSchema";
 import restaurantProvider from "./restaurants.provider";
 import restaurantService from "./restaurants.service";
 
@@ -56,10 +57,13 @@ const postRestaurant = async (req, res) => {
 };
 
 const getRestaurantById = async (req, res) => {
-  const {
+  let {
     params: { restaurantId },
   } = req;
+  restaurantId = Number(restaurantId);
   try {
+    await validationSchema.validateNumber(restaurantId);
+
     const { result, error } = await restaurantProvider.retrieveRestaurantById(
       restaurantId
     );

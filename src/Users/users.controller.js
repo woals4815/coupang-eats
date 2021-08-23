@@ -47,10 +47,13 @@ const postUser = async (req, res) => {
   }
 };
 const getUserById = async (req, res) => {
-  const {
+  let {
     params: { userId },
   } = req;
+  userId = Number(userId);
   try {
+    await validationSchema.validateNumber(userId);
+
     const { result, error } = await userProvider.retrieveUserById(userId);
     if (result) {
       return responseHandler.successResponse(res, result);
@@ -64,8 +67,10 @@ const getUserById = async (req, res) => {
 };
 
 const getUserProfile = async (req, res) => {
-  const { userId } = req;
+  let { userId } = req;
+  userId = Number(userId);
   try {
+    await validationSchema.validateNumber(userId);
     const { result, error } = await userProvider.retrieveUserById(userId);
     if (result) {
       return responseHandler.successResponse(res, result);

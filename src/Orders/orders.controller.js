@@ -1,4 +1,5 @@
 import responseHandler from "../Config/responseHandler";
+import validationSchema from "../Validations/validationSchema";
 import orderProvider from "./orders.provider";
 import orderService from "./orders.service";
 
@@ -23,9 +24,9 @@ const postUserOrder = async (req, res) => {
     userId,
     body: { cartId },
   } = req;
-
-  console.log(userId);
   try {
+    await validationSchema.validatePostOrder({ userId, cartId });
+
     const { result, error } = await orderService.createOrder({
       cartId,
       userId,
@@ -42,10 +43,13 @@ const postUserOrder = async (req, res) => {
 };
 
 const patchOrder = async (req, res) => {
-  const {
+  let {
     params: { orderId },
   } = req;
+  orderId = Number(orderId);
   try {
+    await validationSchema.validateNumber(orderId);
+
     const { result, error } = await orderService.editOrderComplete(orderId);
 
     if (result) {
@@ -60,9 +64,15 @@ const patchOrder = async (req, res) => {
 };
 
 const getUserOrderPast = async (req, res) => {
-  const { userId } = req;
+  let { userId } = req;
+
+  userId = Number(userId);
+
   try {
+    await validationSchema.validateNumber(userId);
+
     const { result, error } = await orderProvider.retrieveCompleteOrder(userId);
+
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {

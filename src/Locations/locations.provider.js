@@ -3,6 +3,7 @@ import pool from "../Config/db";
 import {
   selectRestaurantLocationById,
   selectRestaurantLocations,
+  selectUserLocationById,
   selectUserLocations,
 } from "./locations.dao";
 
@@ -60,7 +61,7 @@ const retrieveRestaurantLocationById = async (restaurantId) => {
 const retrieveUserLocationById = async (userId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectRestaurantLocations(connection, userId);
+    const selectResult = await selectUserLocationById(connection, userId);
 
     const result = { ...baseResponse.SUCCESS, result: selectResult };
 

@@ -63,12 +63,48 @@ const validateLoginBody = async ({ email, password }) => {
 
   return validationResult;
 };
+const validateNumber = async (number) => {
+  const schema = Joi.number().required();
+
+  const validationResult = await schema.validateAsync(number);
+
+  return validationResult;
+};
+
+const validatePostOrder = async ({ userId, cartId }) => {
+  const schema = Joi.object().keys({
+    userId: Joi.number().required(),
+    cartId: Joi.number().required(),
+  });
+  const validateResult = await schema.validateAsync({ userId, cartId });
+
+  return validateResult;
+};
+const validatePostReview = async ({ userId, review, restaurantId, rating }) => {
+  const schema = Joi.object().keys({
+    userId: Joi.number().required(),
+    review: Joi.string().required(),
+    restaurantId: Joi.number().required(),
+    rating: Joi.number().min(0).max(5).required(),
+  });
+  const validateResult = await schema.validateAsync({
+    userId,
+    review,
+    restaurantId,
+    rating,
+  });
+
+  return validateResult;
+};
 
 const validationSchema = {
   validatePostUserBody,
   validateLoginBody,
   validatePostCart,
   validatePostOptionCart,
+  validateNumber,
+  validatePostOrder,
+  validatePostReview,
 };
 
 export default validationSchema;
