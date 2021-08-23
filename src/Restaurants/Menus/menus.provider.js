@@ -5,6 +5,7 @@ import {
   selectMenuByCategory,
   selectMenuById,
   selectMenuByRestaurantId,
+  selectMenuImg,
 } from "./menus.dao";
 
 const retrieveMenus = async ({ restaurantId, categoryId }) => {
@@ -49,9 +50,15 @@ const retrieveMenus = async ({ restaurantId, categoryId }) => {
 const retrieveMenuById = async (menuId) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
-    const selectResult = await selectMenuById(connection, menuId);
-
-    const result = { ...baseResponse.SUCCESS, result: selectResult };
+    const selectMenuResult = await selectMenuById(connection, menuId);
+    const selectMenuImages = await selectMenuImg(connection, menuId);
+    const result = {
+      ...baseResponse.SUCCESS,
+      result: {
+        selectMenuResult,
+        selectMenuImages,
+      },
+    };
 
     return { result };
   } catch (error) {

@@ -17,4 +17,6 @@ uploadRouter.post(
   uploadController.postUploadCategoryImg
 );
 
+uploadRouter.post(routes.menus, uploadImg, uploadController.postUploadMenuImg);
+
 export default uploadRouter;

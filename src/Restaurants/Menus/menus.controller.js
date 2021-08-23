@@ -36,9 +36,27 @@ const postMenu = async (req, res) => {
   }
 };
 
+const getMenuById = async (req, res) => {
+  const {
+    params: { menuId },
+  } = req;
+  try {
+    const { result, error } = await menuProvider.retrieveMenuById(menuId);
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
+  } catch (error) {
+    console.log(error);
+    return responseHandler.errResponse(res, error);
+  }
+};
+
 const menuController = {
   getMenus,
   postMenu,
+  getMenuById,
 };
 
 export default menuController;
