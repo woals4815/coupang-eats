@@ -14,9 +14,10 @@ export const selectUserFavorites = async (connection, userId) => {
       from UserFavorites
       join Restaurants
       on Restaurants.id = UserFavorites.restaurantId
-      join RestaurantImages
+      left join RestaurantImages
       on RestaurantImages.restaurantId = UserFavorites.restaurantId
-      where UserFavorites.userId = ?;
+      where UserFavorites.userId = ?
+      group by Restaurants.id;
   `;
   const [rows] = await connection.query(selectUserFavoritesQuery, userId);
 

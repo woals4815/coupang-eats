@@ -11,13 +11,10 @@ const createFavorites = async ({ restaurantId, userId }) => {
     const { result: selectFavoriteResult } =
       await favoriteProvider.retrieveUserFavorites(userId);
 
-    console.log(selectFavoriteResult);
-
     const alreadyExist = selectFavoriteResult.result?.some(
       (favorite) => favorite.restaurantId === restaurantId
     );
 
-    console.log(alreadyExist);
     if (alreadyExist) {
       throw baseResponse.ALREADY_FAVORITE;
     }
@@ -25,7 +22,7 @@ const createFavorites = async ({ restaurantId, userId }) => {
     const insertParams = [restaurantId, userId];
 
     const insertResult = await insertFavorites(connection, insertParams);
-
+    console.log(insertResult);
     const result = {
       ...baseResponse.CREATE_SUCCESS,
       result: `생성된 데이터 id: ${insertResult.insertId}`,
