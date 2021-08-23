@@ -59,8 +59,8 @@ export const selectMenuByRestaurantId = async (connection, restaurantId) => {
 
 export const selectMenuByCategory = async (connection, selectParams) => {
   const selectMenuByCategoryQuery = `
-    select menuName, Menu.restaurantId, MenuCategories.categoryName,
-    Menu.categoryId
+    select Menu.id, menuName, Menu.restaurantId, MenuCategories.categoryName as menuCategoryName,
+    Menu.categoryId, price
     from Menu
     join MenuCategories
     on MenuCategories.id = Menu.categoryId
