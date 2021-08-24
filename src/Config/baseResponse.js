@@ -136,6 +136,11 @@ const baseResponse = {
     code: 2040,
     message: "이미 찜 한 가게입니다.",
   },
+  NO_USER_ID: {
+    isSuccess: false,
+    code: 2041,
+    message: "로그인 후 이용해주세요.",
+  },
   // Response error
   SIGNUP_REDUNDANT_EMAIL: {
     isSuccess: false,

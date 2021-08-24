@@ -22,11 +22,11 @@ const getCarts = async (req, res) => {
 };
 
 const postCart = async (req, res) => {
-  const { body } = req;
+  let { userId, body } = req;
   try {
-    await validationSchema.validatePostCart(body);
+    await validationSchema.validatePostCart({ userId, ...body });
 
-    const { result, error } = await cartService.createCart(body);
+    const { result, error } = await cartService.createCart({ userId, ...body });
 
     if (result) {
       return responseHandler.successResponse(res, result);
@@ -40,11 +40,14 @@ const postCart = async (req, res) => {
 };
 
 const postOptionCart = async (req, res) => {
-  const { body } = req;
+  const { body, userId } = req;
   try {
     await validationSchema.validatePostOptionCart(body);
 
-    const { result, error } = await cartService.createOptionCart(body);
+    const { result, error } = await cartService.createOptionCart({
+      ...body,
+      userId,
+    });
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {

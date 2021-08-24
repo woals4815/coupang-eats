@@ -49,8 +49,8 @@ const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
       const result = {
         ...baseResponse.CREATE_SUCCESS,
         result: {
-          cartResult: `생성된 카트 id: ${cartInsertResult.insertId}`,
-          optionCartResult: `생성된 옵션 카트 id: ${optionCartInsertResult.insertId}`,
+          cartResult: cartInsertResult.insertId,
+          optionCartResult: optionCartInsertResult.insertId,
         },
       };
 
@@ -80,11 +80,13 @@ const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
   }
 };
 
-const createOptionCart = async ({ optionId, cartId }) => {
+const createOptionCart = async ({ optionId, cartId, userId }) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     await connection.beginTransaction();
-
+    if (!userId) {
+      throw baseResponse.NO_USER_ID;
+    }
     const insertParams = [optionId, cartId];
 
     const insertResult = await insertOptionCart(connection, insertParams);
