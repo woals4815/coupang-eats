@@ -34,7 +34,7 @@ export const selectUserLocations = async (connection) => {
 
 export const insertUserLocation = async (connection, inserParams) => {
   const insertUserLocationQuery = `
-        insert UserLocations(latitude, longitude, category, userId)
+        insert UserLocations(location, locationDetail, category, userId)
         values(?,?,?,?);
     `;
   const [rows] = await connection.query(insertUserLocationQuery, inserParams);

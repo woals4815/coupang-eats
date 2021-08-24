@@ -27,15 +27,20 @@ const createRestaurantLocation = async ({ latitude, longitude }) => {
 };
 
 const createUserLocation = async ({
-  latitude,
-  longitude,
+  location,
+  locationDetail,
   category,
   userId,
 }) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
     await connection.beginTransaction();
-    const insertParams = [latitude, longitude, category, userId];
+    let insertParams;
+    if (locationDetail) {
+      insertParams = [location, locationDetail, category, userId];
+    } else {
+      insertParams = [location, " ", category, userId];
+    }
     const insertResult = await insertUserLocation(connection, insertParams);
 
     await connection.commit();

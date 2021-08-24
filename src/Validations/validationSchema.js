@@ -96,6 +96,21 @@ const validatePostReview = async ({ userId, review, restaurantId, rating }) => {
 
   return validateResult;
 };
+const validatePostUserLocation = async ({ location, category, userId }) => {
+  const schema = Joi.object().keys({
+    location: Joi.string().required(),
+    category: Joi.string().required(),
+    userId: Joi.number().required(),
+  });
+
+  const validateResult = await schema.validateAsync({
+    location,
+    category,
+    userId,
+  });
+
+  return validateResult;
+};
 
 const validationSchema = {
   validatePostUserBody,
@@ -105,6 +120,7 @@ const validationSchema = {
   validateNumber,
   validatePostOrder,
   validatePostReview,
+  validatePostUserLocation,
 };
 
 export default validationSchema;

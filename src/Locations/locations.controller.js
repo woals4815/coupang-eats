@@ -1,4 +1,5 @@
 import responseHandler from "../Config/responseHandler";
+import validationSchema from "../Validations/validationSchema";
 import locationProvider from "./locations.provider";
 import locationService from "./locations.service";
 
@@ -55,7 +56,7 @@ const getRestaurantLocationById = async (req, res) => {
 //특정 유저 위치 전체 조회
 const getUserLocationById = async (req, res) => {
   const { userId } = req;
-  console.log(userId);
+
   try {
     const { result, error } = await locationProvider.retrieveUserLocationById(
       userId
@@ -94,12 +95,18 @@ const postRestaurantLocation = async (req, res) => {
 const postUserLocation = async (req, res) => {
   const {
     userId,
-    body: { latitude, longitude, category },
+    body: { location, locationDetail, category },
   } = req;
   try {
+    await validationSchema.validatePostUserLocation({
+      location,
+      category,
+      userId,
+    });
+
     const { result, error } = await locationService.createUserLocation({
-      latitude,
-      longitude,
+      location,
+      locationDetail,
       category,
       userId,
     });
