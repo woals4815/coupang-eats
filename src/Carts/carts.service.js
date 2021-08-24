@@ -14,7 +14,8 @@ const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
       userId
     );
     const { result: menuResult } = await menuProvider.retrieveMenuById(menuId);
-    const restaurantId = menuResult.result[0].restaurantId;
+
+    const restaurantId = menuResult.result.selectMenuResult[0].restaurantId;
 
     //이미 카트에 담겨있는 메뉴들의 식당 id가 지금 받은 menuId로 가져온 메뉴 id로 검색한 식당 id랑 다르면 throw error 해야 한다
     const isDifferent = alreadyExistCart?.result?.carts?.some(
