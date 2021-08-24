@@ -1,7 +1,8 @@
 export const selectCarts = async (connection, userId) => {
   const selectCartsQuery = `
-        select Carts.id as cartId, menuCounts, isOrdered, Carts.menuId, price, menuName,
-        Carts.userId, Users.name as userName, Menu.restaurantId, Restaurants.name as restaurantName, delieveryFee, Carts.createAt, Carts.updateAt
+        select sum(menuCounts) as menuCounts, isOrdered, Carts.menuId, sum(price) as price, menuName,
+        Carts.userId, Users.name as userName, Menu.restaurantId, Restaurants.name as restaurantName, 
+        delieveryFee, Carts.createAt, Carts.updateAt
         from Carts
         join Users
         on Users.id = Carts.userId
@@ -9,7 +10,8 @@ export const selectCarts = async (connection, userId) => {
         on Menu.id = Carts.menuId
         join Restaurants
         on Restaurants.id = Menu.restaurantId
-        where userId = ? and isOrdered = 0;
+        where userId = ? and isOrdered = 0
+        group by Carts.menuId
     `;
   const [rows] = await connection.query(selectCartsQuery, userId);
 

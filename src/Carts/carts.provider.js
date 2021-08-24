@@ -7,6 +7,7 @@ const retrieveCarts = async (userId) => {
   try {
     const selectCartResult = await selectCarts(connection, userId);
     const selectOptionCartResult = await selectOptionCarts(connection, userId);
+
     const totalResult = {
       carts: selectCartResult,
       optionCarts: selectOptionCartResult,
