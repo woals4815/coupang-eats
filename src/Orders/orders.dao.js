@@ -66,10 +66,6 @@ export const selectOrderComplete = async (connection, userId) => {
         on Carts.id = Orders.cartId
         join Menu
         on Menu.id = Carts.menuId
-        left join OptionCarts
-        on OptionCarts.cartId = Orders.cartId
-        join MenuOptions
-        on MenuOptions.id = OptionCarts.optionId
         where Orders.userId = ? and isComplete=1; 
     `;
   const [rows] = await connection.query(selectOrderCompleteQuery, userId);
