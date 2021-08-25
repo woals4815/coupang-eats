@@ -7,4 +7,7 @@ const authRouter = express.Router();
 authRouter.get(routes.kakaoAuth, authController.getKakaoAuthUrl);
 authRouter.get(routes.kakaoAuthCallback, authController.getKakaoAuthCode);
 
+authRouter.get(routes.googleAuth, authController.getGoogleAuthURL);
+authRouter.get(routes.googleAuthCallback, authController.getGoogleUser);
+
 export default authRouter;

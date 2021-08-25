@@ -28,6 +28,8 @@ const FAVORITES = "/favorites";
 const AUTH = "/auth";
 const KAKAO_AUTH = "/kakao";
 const KAKAO_CALLBACK = "/kakao/callback";
+const GOOGLE_AUTH = "/google";
+const GOOGLE_CALLBACK = "/google/callback";
 
 const routes = {
   start: START_POINT,
@@ -60,6 +62,8 @@ const routes = {
   auth: AUTH,
   kakaoAuth: KAKAO_AUTH,
   kakaoAuthCallback: KAKAO_CALLBACK,
+  googleAuth: GOOGLE_AUTH,
+  googleAuthCallback: GOOGLE_CALLBACK,
 };
 
 export default routes;
