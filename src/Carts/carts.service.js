@@ -91,15 +91,14 @@ const createOptionCart = async ({ optionId, cartId, userId }) => {
     const insertParams = [optionId, cartId];
 
     const insertResult = await insertOptionCart(connection, insertParams);
-
     const result = {
       ...baseResponse.CREATE_SUCCESS,
-      result: `생성된 데이터 id: ${insertResult}`,
+      result: `생성된 데이터 id: ${insertResult.insertId}`,
     };
 
     await connection.commit();
 
-    return result;
+    return { result };
   } catch (error) {
     console.log(error);
 

@@ -1,7 +1,7 @@
 //메뉴 전체 조회 할 때(이미지는 대표 이미지 하나만 조회)
 export const selectAllMenus = async (connection) => {
   const selectAllMenusQuery = `
-        select Menu.id, menuName, Menu.restaurantId, price, Menu.categoryId
+        select Menu.id, menuName, Menu.restaurantId, price, Menu.categoryId,
         categoryName, name, description, imgUrl
         from Menu
         join Restaurants
