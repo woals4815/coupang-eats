@@ -34,18 +34,26 @@ const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
     const isRequired = optionCategoryResult.result?.some(
       (optionCategory) => optionCategory.isRequired
     );
-
+    //필수 옵션이 있을 때
     if (isRequired) {
+      //필수 옵션이 있는데 optionId를 못 받았을 때
       if (!optionId) {
         throw baseResponse.OPTION_ID_EMPTY;
       }
+      //카트 생성 params
       const cartInsertParams = [userId, menuId, menuCounts];
+      console.log(cartInsertParams);
+      //카트 생성 결과
       const cartInsertResult = await insertCart(connection, cartInsertParams);
+      console.log(cartInsertResult);
+      //필수 옵션 카트 생성을 위한 params
       const optionCartInsertParams = [optionId, cartInsertResult.insertId];
+      console.log(optionCartInsertParams);
       const optionCartInsertResult = await insertOptionCart(
         connection,
         optionCartInsertParams
       );
+      console.log(optionCartInsertResult);
 
       const result = {
         ...baseResponse.CREATE_SUCCESS,
