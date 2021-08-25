@@ -22,7 +22,7 @@ export const insertRestaurantLocation = async (connection, locationParams) => {
 
 export const selectUserLocations = async (connection) => {
   const selectUserLocationsQuery = `
-          select id, latitude, longitude, category, userId
+          select id, location, locationDetail, category, userId
           from UserLocations
           order by createAt desc;
           ;
@@ -60,7 +60,7 @@ export const selectRestaurantLocationById = async (
 
 export const selectUserLocationById = async (connection, userId) => {
   const selectUserLocationByIdQuery = `
-        select id, latitude, longitude, category, userId
+        select id, location, locationDetail, category, userId
         from UserLocations
         where userId = ?;
     `;
