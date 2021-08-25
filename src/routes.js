@@ -25,6 +25,9 @@ const UPLOADS = "/uploads";
 const ORDER_DETAIL = "/:orderId";
 const HISTORY = "/history";
 const FAVORITES = "/favorites";
+const AUTH = "/auth";
+const KAKAO_AUTH = "/kakao";
+const KAKAO_CALLBACK = "/kakao/callback";
 
 const routes = {
   start: START_POINT,
@@ -54,6 +57,9 @@ const routes = {
   history: HISTORY,
   favorites: FAVORITES,
   categoryDetail: CATEGORY_DETAIL,
+  auth: AUTH,
+  kakaoAuth: KAKAO_AUTH,
+  kakaoAuthCallback: KAKAO_CALLBACK,
 };
 
 export default routes;

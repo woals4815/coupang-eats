@@ -142,6 +142,11 @@ const baseResponse = {
     message: "로그인 후 이용해주세요.",
   },
   // Response error
+  SOCAIL_LOGIN_ERROR: {
+    isSuccess: false,
+    code: 3020,
+    message: "소셜 로그인을 할 수 없습니다.",
+  },
   SIGNUP_REDUNDANT_EMAIL: {
     isSuccess: false,
     code: 3001,

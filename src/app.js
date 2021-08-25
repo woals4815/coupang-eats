@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import authRouter from "./Routers/authRouter";
 import cartRotuer from "./Routers/cartRouter";
 import foodCategoryRouter from "./Routers/categoryRouter";
 import favoriteRouter from "./Routers/favoriteRouter";
@@ -29,7 +30,7 @@ const app = () => {
   app.use(routes.reviews, reviewRouter);
   app.use(routes.uploads, uploadRouter);
   app.use(routes.favorites, favoriteRouter);
-
+  app.use(routes.auth, authRouter);
   return app;
 };
 
