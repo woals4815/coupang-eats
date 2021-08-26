@@ -9,6 +9,7 @@ authRouter.get(routes.kakaoAuthCallback, authController.getKakaoAuthCode);
 
 authRouter.get(routes.googleAuth, authController.getGoogleAuthURL);
 authRouter.get(routes.googleAuthCallback, authController.getGoogleUser);
-authRouter.get(routes.smsAuth);
+
+authRouter.post(routes.smsAuth, authController.getSMSAuth);
 
 export default authRouter;

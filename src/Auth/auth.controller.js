@@ -5,6 +5,7 @@ import qs from "qs";
 import userProvider from "../Users/users.provider";
 import userService from "../Users/users.service";
 import { google } from "googleapis";
+import { sendSMS } from "../Config/signature";
 
 const kakaoRedirectUri = "http://localhost:3000/auth/kakao/callback";
 
@@ -187,7 +188,11 @@ const getGoogleUser = async (req, res, next) => {
 };
 
 const getSMSAuth = async (req, res) => {
+  const {
+    body: { phoneNumber },
+  } = req;
   try {
+    await sendSMS(phoneNumber);
   } catch (error) {
     console.log(error);
     return responseHandler.errResponse(res, error);
@@ -199,6 +204,7 @@ const authController = {
   getKakaoAuthCode,
   getGoogleAuthURL,
   getGoogleUser,
+  getSMSAuth,
 };
 
 export default authController;
