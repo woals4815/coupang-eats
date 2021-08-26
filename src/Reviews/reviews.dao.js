@@ -8,6 +8,17 @@ export const insertReview = async (connection, insertParams) => {
 
   return rows;
 };
+
+export const insertReviewLikes = async (connection, insertParams) => {
+  const insertReviewLikesQuery = `
+    insert into ReviewLikes(reviewId, isHelp, userId)
+    values(?,?,?);
+  `;
+
+  const [rows] = await connection.query(insertReviewLikesQuery, insertParams);
+
+  return rows;
+};
 //모든 식당 모든 리뷰 전체 조회
 export const selectReviews = async (connection) => {
   const selectReviewsQuery = `

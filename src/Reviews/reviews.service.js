@@ -1,7 +1,7 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import orderProvider from "../Orders/orders.provider";
-import { insertReview } from "./reviews.dao";
+import { insertReview, insertReviewLikes } from "./reviews.dao";
 
 const createReview = async ({ userId, review, restaurantId, rating }) => {
   const connection = await pool.getConnection(async (conn) => conn);
@@ -45,8 +45,33 @@ const createReview = async ({ userId, review, restaurantId, rating }) => {
   }
 };
 
+const createReviewLike = async ({ reviewId, isHelp, userId }) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    await connection.beginTransaction();
+
+    const insertParams = [reviewId, isHelp, userId];
+
+    const insertResult = await insertReviewLikes(connection, insertParams);
+
+    const result = {
+      ...baseResponse.CREATE_SUCCESS,
+      result: `생성된 데이터 id: ${insertResult.insertId}`,
+    };
+
+    return { result };
+  } catch (error) {
+    console.log(error);
+    await connection.rollback();
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
 const reviewService = {
   createReview,
+  createReviewLike,
 };
 
 export default reviewService;

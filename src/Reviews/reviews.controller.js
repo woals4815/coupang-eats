@@ -41,7 +41,18 @@ const postReview = async (req, res) => {
 };
 
 const postReviewLike = async (req, res) => {
+  const { body, userId } = req;
   try {
+    await validationSchema.validatePostReviewLike({ userId, ...body });
+    const { result, error } = await reviewService.createReviewLike({
+      userId,
+      ...body,
+    });
+    if (result) {
+      return responseHandler.successResponse(res, result);
+    } else {
+      throw error;
+    }
   } catch (error) {
     console.log(error);
 
