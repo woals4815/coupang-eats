@@ -40,10 +40,11 @@ const postReview = async (req, res) => {
   }
 };
 
-const getReviewByRestaurant = async (req, res) => {
+const postReviewLike = async (req, res) => {
   try {
   } catch (error) {
     console.log(error);
+
     return responseHandler.errResponse(res, error);
   }
 };
@@ -51,7 +52,7 @@ const getReviewByRestaurant = async (req, res) => {
 const reviewController = {
   getReviews,
   postReview,
-  getReviewByRestaurant,
+  postReviewLike,
 };
 
 export default reviewController;

@@ -30,6 +30,7 @@ const KAKAO_AUTH = "/kakao";
 const KAKAO_CALLBACK = "/kakao/callback";
 const GOOGLE_AUTH = "/google";
 const GOOGLE_CALLBACK = "/google/callback";
+const REVIEW_LIKES = "/likes";
 const SMS = "/sms";
 
 const routes = {
@@ -66,6 +67,7 @@ const routes = {
   googleAuth: GOOGLE_AUTH,
   googleAuthCallback: GOOGLE_CALLBACK,
   smsAuth: SMS,
+  reviewLikes: REVIEW_LIKES,
 };
 
 export default routes;

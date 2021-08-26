@@ -13,7 +13,7 @@ export const selectOrderByUserId = async (connection, userId) => {
   const query = `
         select Orders.id, isComplete, Orders.userId, Orders.createAt,
         menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName,
-        Carts.id as cartId
+        Carts.id as cartId, Menu.restaurantId
         from Orders
         join Carts
         on Carts.id = Orders.cartId
@@ -21,6 +21,8 @@ export const selectOrderByUserId = async (connection, userId) => {
         on Users.id = Orders.userId
         join Menu
         on Menu.id = Carts.menuId
+        join Restaurants
+        on Restaurants.id = Menu.restaurantId
         where Orders.userId = ? and isComplete=0;
     `;
   const [rows] = await connection.query(query, userId);
