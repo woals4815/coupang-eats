@@ -60,7 +60,7 @@ export const selectOrderComplete = async (connection, userId) => {
   const selectOrderCompleteQuery = `
         select Orders.id, isComplete, Orders.userId, Orders.createAt,
         menuCounts, isOrdered, Menu.price as menuPrice, Menu.menuName,
-        Carts.id as cartId
+        Carts.id as cartId, Menu.restaurantId
         from Orders
         join Users
         on Users.id = Orders.userId
