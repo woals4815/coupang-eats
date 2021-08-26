@@ -22,7 +22,7 @@ const getReviews = async (req, res) => {
 const postReview = async (req, res) => {
   const { userId, body } = req;
   try {
-    await validationSchema.validatePostOrder({ userId, ...body });
+    await validationSchema.validatePostReview({ userId, ...body });
 
     const { result, error } = await reviewService.createReview({
       userId,

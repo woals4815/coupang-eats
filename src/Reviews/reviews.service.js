@@ -13,7 +13,7 @@ const createReview = async ({ userId, review, restaurantId, rating }) => {
     if (error) {
       throw error;
     }
-    const didOrder = orderResult.result?.some(
+    const didOrder = orderResult.result.selectMenuOrderResult?.some(
       (order) => order.userId === userId
     );
     // 주문한 유저가 아니라면 에러 처리
