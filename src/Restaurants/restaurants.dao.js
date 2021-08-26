@@ -256,3 +256,78 @@ export const selectAllRestaurantImg = async (connection) => {
 
   return rows;
 };
+
+export const selectRestaurantsByCategoryOrderNew = async (
+  connection,
+  categoryId
+) => {
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
+    where Categories.id = ?
+    group by Restaurants.id
+    order by Restaurants.createAt desc 
+  `;
+  const [rows] = await connection.query(query, categoryId);
+
+  return rows;
+};
+
+export const selectRestaurantsByCategoryOrderBest = async (
+  connection,
+  categoryId
+) => {
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
+    where Categories.id = ?
+    group by Restaurants.id
+    order by avg(rating)
+  `;
+  const [rows] = await connection.query(query, categoryId);
+
+  return rows;
+};
+
+export const selectRestaurantsByCategory = async (connection, categoryId) => {
+  const query = `
+    select Restaurants.id, name, minOrderPrice, delieveryFee, categoryName,
+    latitude, longitude, count(Reviews.id) as reviewCount, avg(rating) as ratingAvg,
+    imgUrl
+    from Restaurants
+    join Categories
+    on Categories.id = Restaurants.categoryId
+    join RestaurantLocations
+    on RestaurantLocations.id = Restaurants.locationId
+    left join Reviews
+    on Reviews.restaurantId = Restaurants.id
+    left join RestaurantImages
+    on RestaurantImages.restaurantId = Restaurants.id
+    where Categories.id = ?
+    group by Restaurants.id
+  `;
+
+  const [rows] = await connection.query(query, categoryId);
+
+  return rows;
+};

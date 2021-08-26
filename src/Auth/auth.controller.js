@@ -186,6 +186,14 @@ const getGoogleUser = async (req, res, next) => {
   }
 };
 
+const getSMSAuth = async (req, res) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    return responseHandler.errResponse(res, error);
+  }
+};
+
 const authController = {
   getKakaoAuthUrl,
   getKakaoAuthCode,

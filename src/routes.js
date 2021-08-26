@@ -30,6 +30,7 @@ const KAKAO_AUTH = "/kakao";
 const KAKAO_CALLBACK = "/kakao/callback";
 const GOOGLE_AUTH = "/google";
 const GOOGLE_CALLBACK = "/google/callback";
+const SMS = "/sms";
 
 const routes = {
   start: START_POINT,
@@ -64,6 +65,7 @@ const routes = {
   kakaoAuthCallback: KAKAO_CALLBACK,
   googleAuth: GOOGLE_AUTH,
   googleAuthCallback: GOOGLE_CALLBACK,
+  smsAuth: SMS,
 };
 
 export default routes;

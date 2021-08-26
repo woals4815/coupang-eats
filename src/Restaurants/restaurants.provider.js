@@ -1,10 +1,12 @@
 import baseResponse from "../Config/baseResponse";
 import pool from "../Config/db";
 import {
-  selectAllRestaurantImg,
   selectRestaurantById,
   selectRestaurantImg,
   selectRestaurants,
+  selectRestaurantsByCategory,
+  selectRestaurantsByCategoryOrderBest,
+  selectRestaurantsByCategoryOrderNew,
   selectRestaurantsByKeyword,
   selectRestaurantsByKeywordOrderBest,
   selectRestaurantsByKeywordOrderMany,
@@ -126,6 +128,60 @@ const retrieveRestaurantById = async (restaurantId) => {
   }
 };
 
+const retrieveRestaurantByCategoryId = async (categoryId, order) => {
+  const connection = await pool.getConnection(async (conn) => conn);
+  try {
+    if (order === "new") {
+      const selectResult = await selectRestaurantsByCategoryOrderNew(
+        connection,
+        categoryId
+      );
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else if (order === "best") {
+      const selectResult = await selectRestaurantsByCategoryOrderBest(
+        connection,
+        categoryId
+      );
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+      const result = { ...baseResponse.SUCCESS, result: selectResult };
+
+      return { result };
+    } else {
+      const selectResult = await selectRestaurantsByCategory(
+        connection,
+        categoryId
+      );
+      selectResult.forEach((restaurant) => {
+        restaurant.ratingAvg =
+          restaurant.ratingAvg === null ? 0 : restaurant.ratingAvg;
+      });
+      const result = {
+        ...baseResponse.SUCCESS,
+        result: {
+          restaurantResult: selectResult,
+        },
+      };
+
+      return { result };
+    }
+  } catch (error) {
+    console.log(error);
+    return { error };
+  } finally {
+    connection.release();
+  }
+};
+
 const retrieveRestaurantsByKeyword = async (keyword, order) => {
   const connection = await pool.getConnection(async (conn) => conn);
   try {
@@ -215,6 +271,7 @@ const restaurantProvider = {
   retrieveRestaurantById,
   retrieveRestaurantsByKeyword,
   retrieveRestaurantImg,
+  retrieveRestaurantByCategoryId,
 };
 
 export default restaurantProvider;

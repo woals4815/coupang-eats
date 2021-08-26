@@ -5,7 +5,7 @@ import restaurantService from "./restaurants.service";
 
 const getRestaurants = async (req, res) => {
   const {
-    query: { search, order },
+    query: { search, order, categoryId },
   } = req;
   try {
     if (search) {
@@ -16,11 +16,21 @@ const getRestaurants = async (req, res) => {
       } else {
         throw error;
       }
+    } else if (categoryId) {
+      const { result, error } =
+        await restaurantProvider.retrieveRestaurantByCategoryId(
+          categoryId,
+          order
+        );
+      if (result) {
+        return responseHandler.successResponse(res, result);
+      } else {
+        throw error;
+      }
     } else {
       const { result, error } = await restaurantProvider.retrieveRestaurants(
         order
       );
-
       if (result) {
         return responseHandler.successResponse(res, result);
       } else {
