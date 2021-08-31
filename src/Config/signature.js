@@ -4,7 +4,7 @@ import axios from "axios";
 
 const url = `https://sens.apigw.ntruss.com/sms/v2/services/${process.env.NCP_ID}/messages`;
 
-export const makeSignature = () => {
+const makeSignature = () => {
   const message = [];
   const secretKey = process.env.NCP_SECRET_2;
   const accessKey = process.env.NCP_ACCESS;

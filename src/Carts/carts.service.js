@@ -42,19 +42,17 @@ const createCart = async ({ userId, menuId, menuCounts, optionId }) => {
       }
       //카트 생성 params
       const cartInsertParams = [userId, menuId, menuCounts];
-      console.log(cartInsertParams);
+
       //카트 생성 결과
       const cartInsertResult = await insertCart(connection, cartInsertParams);
-      console.log(cartInsertResult);
+
       //필수 옵션 카트 생성을 위한 params
       const optionCartInsertParams = [optionId, cartInsertResult.insertId];
-      console.log(optionCartInsertParams);
+
       const optionCartInsertResult = await insertOptionCart(
         connection,
         optionCartInsertParams
       );
-      console.log(optionCartInsertResult);
-
       const result = {
         ...baseResponse.CREATE_SUCCESS,
         result: {
