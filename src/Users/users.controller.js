@@ -7,14 +7,13 @@ import userService from "./users.service";
 const getUsers = async (req, res) => {
   try {
     const { result, error } = await userProvider.retrieveUsers();
-
+    throw new Error("hey");
     if (result) {
       return responseHandler.successResponse(res, result);
     } else {
       throw error;
     }
   } catch (error) {
-    console.log(error);
     return responseHandler.errResponse(res, error);
   }
 };

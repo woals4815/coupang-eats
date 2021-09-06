@@ -30,7 +30,8 @@ const getKakaoAuthCode = async (req, res) => {
         client_secret: process.env.KAKAO_SECRET,
         redirectUri: kakaoRedirectUri,
         code: req.query.code, //결과값을 반환했다. 안됐다.
-      }), //객체를 string 으로 변환
+      }),
+      //객체를 string 으로 변환
     });
     const {
       data: { access_token },
