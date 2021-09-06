@@ -3,7 +3,7 @@ module.exports = {
     {
       name: "coupang-eats",
       script: "npm run",
-      args: "start",
+      args: "pm2",
     },
   ],
 };
