@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: "rp3_test_server_coupang_eats_coogie",
+      name: "coupang-eats",
       script: "npm run",
       args: "start",
     },
